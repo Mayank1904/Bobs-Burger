@@ -1,0 +1,23 @@
+plugins {
+    id 'kotlin'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+    implementation project(path: ':domain')
+    implementation dataModuleDependencies.kotlin
+    implementation dataModuleDependencies.coroutine
+    // JavaX
+    implementation dataModuleDependencies.javax
+    implementation remoteModuleDependencies.network
+
+    testImplementation testDependencies.coroutinesTest
+    testImplementation testDependencies.jUnit
+    testImplementation testDependencies.assertJ
+    testImplementation testDependencies.mockitoKotlin
+    testImplementation testDependencies.mockitoInline
+}

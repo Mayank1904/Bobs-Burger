@@ -1,0 +1,63 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+
+}
+
+android {
+    compileSdkVersion androidCompileSdkVersion
+    defaultConfig {
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidTargetSdkVersion
+        versionCode appVersionCode
+        versionName appVersionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation project(path: ':domain')
+    implementation presentationModuleDependencies.kotlin
+    implementation presentationModuleDependencies.coroutine
+
+    // Dagger-Hilt
+    implementation presentationModuleDependencies.daggerHilt
+    implementation uiModuleDependencies.constraint
+    implementation uiModuleDependencies.material
+    implementation uiModuleDependencies.navigationFragmentKtx
+    implementation uiModuleDependencies.navigationUiKtx
+    kapt presentationModuleDependencies.daggerHiltKapt
+
+    // JavaX
+    implementation presentationModuleDependencies.javax
+
+    // LifeCycle
+    implementation presentationModuleDependencies.lifeCycle
+
+
+    testImplementation testDependencies.coroutinesTest
+    testImplementation testDependencies.jUnit
+    testImplementation testDependencies.assertJ
+    testImplementation testDependencies.mockitoKotlin
+    testImplementation testDependencies.mockitoInline
+    testImplementation testDependencies.androidxArchCore
+    testImplementation testDependencies.robolectric
+}

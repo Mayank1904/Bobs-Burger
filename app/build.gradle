@@ -1,0 +1,71 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    namespace 'com.developer.mayank'
+    compileSdkVersion androidCompileSdkVersion
+    buildToolsVersion androidBuildToolsVersion
+    defaultConfig {
+        applicationId "com.developer.mayank"
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidTargetSdkVersion
+        versionCode appVersionCode
+        versionName appVersionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation project(':domain')
+    implementation project(':data')
+    implementation project(':presentation')
+
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation networkDependencies.retrofit
+    implementation uiModuleDependencies.kotlin
+    implementation uiModuleDependencies.coreKtx
+    implementation uiModuleDependencies.appCompat
+    implementation uiModuleDependencies.material
+    implementation uiModuleDependencies.constraint
+    implementation uiModuleDependencies.navigationFragmentKtx
+    implementation uiModuleDependencies.navigationUiKtx
+    implementation uiModuleDependencies.activityKtx
+    // LifeCycle
+    implementation uiModuleDependencies.lifeCycle
+    // Dagger-Hilt
+    implementation uiModuleDependencies.daggerHilt
+    kapt uiModuleDependencies.daggerHiltKapt
+    // Coroutines
+    implementation uiModuleDependencies.coroutines
+    // Glide
+    implementation uiModuleDependencies.glide
+    kapt uiModuleDependencies.glideKapt
+    // Timber
+    implementation uiModuleDependencies.timber
+
+    implementation remoteModuleDependencies.network
+}

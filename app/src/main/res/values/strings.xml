@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Bobs-Burger</string>
+    <string name="detail">Detail</string>
+    <string name="characterImage">CharacterImage</string>
+    <string name="character_list_label_last_known_location">Last Known Location:</string>
+    <string name="voiced_by">Voiced By:</string>
+    <string name="character_gender_label">Gender</string>
+</resources>
