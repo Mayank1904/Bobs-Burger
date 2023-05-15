@@ -42,7 +42,7 @@ class CharacterDetailFragment : Fragment() {
         )[BBCharacterDetailViewModel::class.java]
 
         characterId = requireArguments().getInt("character_id")
-        observe(viewModel.character, ::onViewStateChange)
+        observe(viewModel.getCharacter(), ::onViewStateChange)
         viewModel.getCharacterDetail(characterId)
     }
 
