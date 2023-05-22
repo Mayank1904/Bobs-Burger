@@ -14,14 +14,13 @@
         <action
             android:id="@+id/action_characterListFragment_to_characterDetailFragment"
             app:destination="@id/characterDetailFragment"
-            app:popUpTo="@+id/characterListFragment"/>
+            app:popUpTo="@+id/characterListFragment" />
     </fragment>
     <fragment
         android:id="@+id/characterDetailFragment"
         android:name="com.developer.presentation.ui.CharacterDetailFragment"
         android:label="Character Detail"
-        tools:layout="@layout/fragment_character_detail"
-        >
+        tools:layout="@layout/fragment_character_detail">
         <argument
             android:name="character_id"
             app:argType="integer" />

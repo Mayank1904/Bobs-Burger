@@ -76,16 +76,16 @@ ext {
     ]
 
     testDependencies = [
-            coroutinesTest     : "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion",
-            jUnit              : "junit:junit:$junitVersion",
-            assertJ            : "org.assertj:assertj-core:$assertJVersion",
-            kotlinJUnit        : "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion",
-            mockitoKotlin      : "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion",
-            mockitoCore        : "org.mockito:mockito-core:$mockitoCoreVersion",
-            mockitoInline      : "org.mockito:mockito-inline:$mockitoInlineVersion",
-            androidxArchCore   : "androidx.arch.core:core-testing:$androidxArchCoreVersion",
-            androidxTestExtJunit : "androidx.test.ext:$extJunitVersion",
-            robolectric        : "org.robolectric:robolectric:$robolectricVersion"
+            coroutinesTest      : "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion",
+            jUnit               : "junit:junit:$junitVersion",
+            assertJ             : "org.assertj:assertj-core:$assertJVersion",
+            kotlinJUnit         : "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion",
+            mockitoKotlin       : "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion",
+            mockitoCore         : "org.mockito:mockito-core:$mockitoCoreVersion",
+            mockitoInline       : "org.mockito:mockito-inline:$mockitoInlineVersion",
+            androidxArchCore    : "androidx.arch.core:core-testing:$androidxArchCoreVersion",
+            androidxTestExtJunit: "androidx.test.ext:$extJunitVersion",
+            robolectric         : "org.robolectric:robolectric:$robolectricVersion"
     ]
 
     lifeCycleDependencies = [
@@ -117,8 +117,8 @@ ext {
     ]
 
     networkDependencies = [
-            okhttp           : "com.squareup.okhttp3:okhttp:$okhttpVersion",
-            okhttpInterceptor: "com.squareup.okhttp3:logging-interceptor:$okhttpVersion",
+            okhttp            : "com.squareup.okhttp3:okhttp:$okhttpVersion",
+            okhttpInterceptor : "com.squareup.okhttp3:logging-interceptor:$okhttpVersion",
             retrofit          : "com.squareup.retrofit2:retrofit:$retrofitVersion",
             moshiConverter    : "com.squareup.retrofit2:converter-moshi:$moshiConverterVersion",
             loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:$loggingInterceptorVersion",
@@ -152,14 +152,14 @@ ext {
     ]
 
     dataModuleDependencies = [
-            kotlin     : kotlinDependencies.kotlin,
-            javax      : javaDependencies.javax,
+            kotlin   : kotlinDependencies.kotlin,
+            javax    : javaDependencies.javax,
             coroutine: coroutinesDependencies.coroutineCore,
     ]
 
     domainModuleDependencies = [
-            kotlin: kotlinDependencies.kotlin,
-            javax      : javaDependencies.javax,
+            kotlin   : kotlinDependencies.kotlin,
+            javax    : javaDependencies.javax,
             coroutine: coroutinesDependencies.coroutineCore,
     ]
 
@@ -172,18 +172,18 @@ ext {
                              hiltDependencies.hiltKapt],
             coroutine     : coroutinesDependencies.coroutineCore,
             lifeCycle     : [
-                             lifeCycleDependencies.viewModelKtx,
-                             lifeCycleDependencies.liveDataKtx,
-                             lifeCycleDependencies.lifeCycleExtension,
-                             lifeCycleDependencies.lifeCycleRuntime,
-                             lifeCycleDependencies.lifeCycleRuntimeKtx],
+                    lifeCycleDependencies.viewModelKtx,
+                    lifeCycleDependencies.liveDataKtx,
+                    lifeCycleDependencies.lifeCycleExtension,
+                    lifeCycleDependencies.lifeCycleRuntime,
+                    lifeCycleDependencies.lifeCycleRuntimeKtx],
     ]
 
     remoteModuleDependencies = [
             kotlin : kotlinDependencies.kotlin,
-            network    : [networkDependencies.retrofit,
-                          networkDependencies.moshiConverter,
-                          networkDependencies.loggingInterceptor],
+            network: [networkDependencies.retrofit,
+                      networkDependencies.moshiConverter,
+                      networkDependencies.loggingInterceptor],
     ]
 
 }

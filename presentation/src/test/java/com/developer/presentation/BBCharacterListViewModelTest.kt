@@ -3,6 +3,7 @@ package com.developer.presentation
 import com.developer.domain.models.CharacterEntityItem
 import com.developer.domain.models.Relative
 import com.developer.domain.use_cases.GetCharactersUseCase
+import com.developer.presentation.mappers.CharacterMapper
 import com.developer.presentation.viewmodel.BBCharactersViewModel
 import com.developer.presentation.viewmodel.CharacterUIModel
 import com.nhaarman.mockitokotlin2.doAnswer
@@ -10,7 +11,6 @@ import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -29,10 +29,11 @@ class BBCharacterListViewModelTest {
     @get: Rule
     val mainDispatcherRule = MainDispatcherRule()
 
+    @Mock
+    lateinit var characterMapper: CharacterMapper
 
     @Mock
     lateinit var charactersUseCase: GetCharactersUseCase
-
 
     private lateinit var viewModel: BBCharactersViewModel
 
@@ -40,7 +41,7 @@ class BBCharacterListViewModelTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        viewModel = BBCharactersViewModel(charactersUseCase)
+        viewModel = BBCharactersViewModel(charactersUseCase, characterMapper)
     }
 
     @Test
@@ -55,7 +56,10 @@ class BBCharacterListViewModelTest {
             viewModel.loadCharacters()
 
             // Assert (Then)
-            Assert.assertEquals(CharacterUIModel.Success(characters), viewModel.characterListFlow.value)
+            Assert.assertEquals(
+                CharacterUIModel.Success(characterMapper.mapFromModel(characters)),
+                viewModel.characterListFlow.value
+            )
 
         }
 
@@ -66,12 +70,15 @@ class BBCharacterListViewModelTest {
             val characters = listOf<CharacterEntityItem>()
             Assert.assertEquals(CharacterUIModel.Loading, viewModel.characterListFlow.value)
 
-            `when`(charactersUseCase(Unit)).thenReturn(flowOf( characters))
+            `when`(charactersUseCase(Unit)).thenReturn(flowOf(characters))
             // Act (When)
             viewModel.loadCharacters()
 
             // Assert (Then)
-            Assert.assertEquals(CharacterUIModel.Success(characters), viewModel.characterListFlow.value)
+            Assert.assertEquals(
+                CharacterUIModel.Success(characterMapper.mapFromModel(characters)),
+                viewModel.characterListFlow.value
+            )
         }
 
     @Test
@@ -136,9 +143,5 @@ class BBCharacterListViewModelTest {
             )
         )
     )
-
-    @After
-    fun tearDown() {
-    }
 
 }

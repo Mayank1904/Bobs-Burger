@@ -2,7 +2,9 @@ package com.developer.presentation
 
 import com.developer.domain.models.CharacterEntityItem
 import com.developer.domain.models.Relative
+import com.developer.domain.repository.CharacterRepository
 import com.developer.domain.use_cases.GetCharacterByIdUseCase
+import com.developer.presentation.mappers.CharacterItemMapper
 import com.developer.presentation.viewmodel.BBCharacterDetailViewModel
 import com.developer.presentation.viewmodel.CharacterDetailUIModel
 import com.nhaarman.mockitokotlin2.doAnswer
@@ -10,7 +12,6 @@ import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -18,7 +19,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
-import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import java.io.IOException
 
@@ -30,16 +30,20 @@ class BBCharacterDetailViewModelTest {
     val mainDispatcherRule = MainDispatcherRule()
 
     @Mock
+    lateinit var characterRepository: CharacterRepository
+
     lateinit var characterByIdUseCase: GetCharacterByIdUseCase
 
+    lateinit var characterItemMapper: CharacterItemMapper
 
     private lateinit var viewModel: BBCharacterDetailViewModel
 
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this)
-        viewModel = BBCharacterDetailViewModel(characterByIdUseCase)
+        characterByIdUseCase = GetCharacterByIdUseCase(characterRepository)
+        characterItemMapper = CharacterItemMapper()
+        viewModel = BBCharacterDetailViewModel(characterByIdUseCase, characterItemMapper)
     }
 
     @Test
@@ -53,25 +57,26 @@ class BBCharacterDetailViewModelTest {
             // Act (When)
             viewModel.getCharacterDetail(characterId)
 
+            val mappedData = characterItemMapper.mapFromModel(character)
             // Assert (Then)
-            Assert.assertEquals(CharacterDetailUIModel.Success(character), viewModel.characterDetailFlow.value)
+            Assert.assertEquals(
+                CharacterDetailUIModel.Success(mappedData),
+                viewModel.characterDetailFlow.value
+            )
 
         }
 
     @Test
     fun `get character detail with character Id should return error from use-case`() =
         runTest {
-            val characterId = 448
+            val characterId = 441
             // Arrange (Given)
             val errorMessage = "Internal server error"
-            Assert.assertEquals(CharacterDetailUIModel.Loading, viewModel.characterDetailFlow.value)
-
             whenever(characterByIdUseCase(characterId)) doAnswer { throw IOException(errorMessage) }
+            Assert.assertEquals(CharacterDetailUIModel.Loading, viewModel.characterDetailFlow.value)
 
             // Act (When)
             viewModel.getCharacterDetail(characterId)
-
-            // Assert (Then)
         }
 
 
@@ -125,10 +130,5 @@ class BBCharacterDetailViewModelTest {
             )
         )
     )
-
-    @After
-    fun tearDown() {
-//        viewModel.onCleared()
-    }
 
 }

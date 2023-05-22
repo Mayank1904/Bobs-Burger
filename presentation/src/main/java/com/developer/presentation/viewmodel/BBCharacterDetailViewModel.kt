@@ -2,8 +2,8 @@ package com.developer.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developer.domain.models.CharacterEntityItem
 import com.developer.domain.use_cases.GetCharacterByIdUseCase
+import com.developer.presentation.mappers.CharacterItemMapper
 import com.developer.presentation.utils.ExceptionHandler
 import com.developer.presentation.utils.Result
 import com.developer.presentation.utils.asResult
@@ -18,20 +18,24 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BBCharacterDetailViewModel @Inject constructor(
-    private val getCharacterByIdUseCase: GetCharacterByIdUseCase
+    private val getCharacterByIdUseCase: GetCharacterByIdUseCase,
+    private val characterItemMapper: CharacterItemMapper,
 ) : ViewModel() {
-
-    private val _characterDetailFlow = MutableStateFlow<CharacterDetailUIModel>(CharacterDetailUIModel.Loading)
+    private val _characterDetailFlow =
+        MutableStateFlow<CharacterDetailUIModel>(CharacterDetailUIModel.Loading)
     val characterDetailFlow: StateFlow<CharacterDetailUIModel> = _characterDetailFlow.asStateFlow()
 
-
     fun getCharacterDetail(characterId: Int) = viewModelScope.launch {
-        getCharacterByIdUseCase(characterId).asResult().collect{ result ->
+        getCharacterByIdUseCase(characterId).asResult().collect { result ->
             _characterDetailFlow.update {
-                when(result){
+                when (result) {
                     is Result.Error -> CharacterDetailUIModel.Error(ExceptionHandler.parse(result.exception))
                     is Result.Loading -> CharacterDetailUIModel.Loading
-                    is Result.Success -> CharacterDetailUIModel.Success(result.data)
+                    is Result.Success -> CharacterDetailUIModel.Success(
+                        characterItemMapper.mapFromModel(
+                            result.data
+                        )
+                    )
                 }
             }
         }

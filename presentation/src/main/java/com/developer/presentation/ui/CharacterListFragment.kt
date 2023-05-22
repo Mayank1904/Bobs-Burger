@@ -51,7 +51,7 @@ class CharacterListFragment : Fragment() {
         )[BBCharactersViewModel::class.java]
 
         setupRecyclerView()
-        if(savedInstanceState == null)
+        if (savedInstanceState == null)
             viewModel.loadCharacters()
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.characterListFlow.collect { result ->
@@ -62,10 +62,12 @@ class CharacterListFragment : Fragment() {
                             characterAdapter.list = it
                         }
                     }
+
                     is CharacterUIModel.Error -> {
                         binding.progressBarCharacters.makeGone()
-                        showSnackBar(binding.root,getString(result.error))
+                        showSnackBar(binding.root, getString(result.error))
                     }
+
                     is CharacterUIModel.Loading -> {
                         binding.progressBarCharacters.makeVisible()
                     }

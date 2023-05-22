@@ -9,9 +9,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class CharacterRepositoryImpl @Inject constructor(private val characterService: CharacterService,
-                                                  private val characterEntityMapper: CharacterEntityMapper,
-                                                  private val characterEntityItemMapper: CharacterEntityItemMapper) : CharacterRepository {
+class CharacterRepositoryImpl @Inject constructor(
+    private val characterService: CharacterService,
+    private val characterEntityMapper: CharacterEntityMapper,
+    private val characterEntityItemMapper: CharacterEntityItemMapper
+) : CharacterRepository {
     override suspend fun getCharacters(): Flow<List<CharacterEntityItem>> =
         flow {
             val characters = characterService.getCharacters()

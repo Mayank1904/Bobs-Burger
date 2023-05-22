@@ -17,10 +17,10 @@ import org.mockito.junit.MockitoJUnitRunner
 @InternalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class CharacterEntityItemMapperTest : BaseDataTest() {
-    private lateinit var characterEntityItemMapper:  CharacterEntityItemMapper
+    private lateinit var characterEntityItemMapper: CharacterEntityItemMapper
 
     @Before
-    fun setUp(){
+    fun setUp() {
         characterEntityItemMapper = CharacterEntityItemMapper()
     }
 

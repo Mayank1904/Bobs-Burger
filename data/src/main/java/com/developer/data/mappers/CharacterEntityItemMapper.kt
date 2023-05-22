@@ -17,7 +17,15 @@ class CharacterEntityItemMapper @Inject constructor(
             image = model.image,
             name = model.name,
             occupation = model.occupation,
-            relatives = model.relatives.map { Relative(id = it.id, name = it.name, relationship = it.relationship, url = it.url, wikiUrl = it.wikiUrl) },
+            relatives = model.relatives.map {
+                Relative(
+                    id = it.id,
+                    name = it.name,
+                    relationship = it.relationship,
+                    url = it.url,
+                    wikiUrl = it.wikiUrl
+                )
+            },
             url = model.url,
             voicedBy = model.voicedBy,
             wikiUrl = model.wikiUrl,

@@ -29,20 +29,21 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CharacterRepositoryImpTest : BaseDataTest() {
 
-
     @Mock
     lateinit var characterItemMapper: CharacterEntityItemMapper
-    @Mock
-    lateinit var characterMapper : CharacterEntityMapper
 
     @Mock
-    lateinit var characterService : CharacterService
+    lateinit var characterMapper: CharacterEntityMapper
 
-    lateinit var characterRepositoryImpl : CharacterRepositoryImpl
+    @Mock
+    lateinit var characterService: CharacterService
+
+    private lateinit var characterRepositoryImpl: CharacterRepositoryImpl
 
     @Before
     fun setUp() {
-        characterRepositoryImpl = CharacterRepositoryImpl(characterService,characterMapper, characterItemMapper)
+        characterRepositoryImpl =
+            CharacterRepositoryImpl(characterService, characterMapper, characterItemMapper)
     }
 
     @Test
@@ -126,25 +127,25 @@ class CharacterRepositoryImpTest : BaseDataTest() {
         )
 
     private fun getCharacter(): CharacterEntityItemModel = CharacterEntityItemModel(
-                id = 448,
-                age = "12",
+        id = 448,
+        age = "12",
+        name = "",
+        image = "",
+        gender = "",
+        hairColor = "Black",
+        occupation = "",
+        firstEpisode = "",
+        voicedBy = "",
+        url = "",
+        wikiUrl = "",
+        relatives = listOf(
+            Relative(
+                id = "",
                 name = "",
-                image = "",
-                gender = "",
-                hairColor = "Black",
-                occupation = "",
-                firstEpisode = "",
-                voicedBy = "",
+                relationship = "",
                 url = "",
-                wikiUrl = "",
-                relatives = listOf(
-                    Relative(
-                        id = "",
-                        name = "",
-                        relationship = "",
-                        url = "",
-                        wikiUrl = ""
-                    )
-                )
+                wikiUrl = ""
             )
+        )
+    )
 }

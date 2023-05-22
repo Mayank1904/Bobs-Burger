@@ -24,6 +24,7 @@ class CharacterDetailFragment : Fragment() {
     private var _binding: FragmentCharacterDetailBinding? = null
     private val binding get() = _binding!!
     lateinit var viewModel: BBCharacterDetailViewModel
+
     @Inject
     lateinit var glide: RequestManager
 
@@ -48,7 +49,7 @@ class CharacterDetailFragment : Fragment() {
         viewModel.getCharacterDetail(characterId)
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.characterDetailFlow.collect{ result ->
+            viewModel.characterDetailFlow.collect { result ->
                 when (result) {
                     is CharacterDetailUIModel.Success -> {
                         result.data.let { character ->
@@ -64,11 +65,13 @@ class CharacterDetailFragment : Fragment() {
                             }
                         }
                     }
+
                     is CharacterDetailUIModel.Error -> {
                         binding.progressBarCharacterDetail.makeGone()
-                        showSnackBar(binding.root,getString(result.error))
+                        showSnackBar(binding.root, getString(result.error))
 
                     }
+
                     is CharacterDetailUIModel.Loading -> {
                         binding.progressBarCharacterDetail.makeVisible()
                     }

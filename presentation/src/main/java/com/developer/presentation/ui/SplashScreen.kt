@@ -24,7 +24,8 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        glide.load("https://bobsburgers-api.herokuapp.com/images/characters/448.jpg").into(binding.imageView)
+        glide.load("https://bobsburgers-api.herokuapp.com/images/characters/448.jpg")
+            .into(binding.imageView)
 
         lifecycleScope.launch {
             delay(1000)

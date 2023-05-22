@@ -18,7 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CharacterEntityMapperTest : BaseDataTest() {
 
-    lateinit var characterEntityMapperTest : CharacterEntityMapper
+    lateinit var characterEntityMapperTest: CharacterEntityMapper
 
     @Before
     fun setUp() {

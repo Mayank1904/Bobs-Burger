@@ -25,6 +25,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 import java.io.IOException
+
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -32,7 +33,7 @@ class GetCharacterByIdUseCaseTest : BaseUseCaseTest() {
 
     private var characterRepository = mock<CharacterRepository>()
 
-    lateinit var getCharacterByIdUseCase : GetCharacterByIdUseCase
+    lateinit var getCharacterByIdUseCase: GetCharacterByIdUseCase
 
     @Before
     fun setUp() {
@@ -48,23 +49,27 @@ class GetCharacterByIdUseCaseTest : BaseUseCaseTest() {
             val character = getCharacterByIdUseCase(characterId).single()
 
             assertEquals(character.id, 448)
-            assertEquals(character.hairColor,"Black")
+            assertEquals(character.hairColor, "Black")
             verify(characterRepository, times(1)).getCharacter(characterId)
         }
 
 
     @Test
-    fun `get bob character by id should return error result with exception`() = dispatcher.runBlockingTest {
-        val characterId = 448
-        whenever(characterRepository.getCharacter(characterId)) doAnswer { throw IOException() }
+    fun `get bob character by id should return error result with exception`() =
+        dispatcher.runBlockingTest {
+            val characterId = 448
+            whenever(characterRepository.getCharacter(characterId)) doAnswer { throw IOException() }
 
-        // Act (When)
-        launch(exceptionHandler) { getCharacterByIdUseCase(characterId).single() }
+            // Act (When)
+            launch(exceptionHandler) { getCharacterByIdUseCase(characterId).single() }
 
-        // Assert (Then)
-        assertThat(exceptionHandler.uncaughtExceptions.first(), instanceOf(IOException::class.java))
-        verify(characterRepository, times(1)).getCharacter(characterId)
-    }
+            // Assert (Then)
+            assertThat(
+                exceptionHandler.uncaughtExceptions.first(),
+                instanceOf(IOException::class.java)
+            )
+            verify(characterRepository, times(1)).getCharacter(characterId)
+        }
 
     private fun getCharacter(): Flow<CharacterEntityItem> = flow {
         val character =
@@ -81,8 +86,9 @@ class GetCharacterByIdUseCaseTest : BaseUseCaseTest() {
                 url = "",
                 wikiUrl = "",
                 relatives = listOf(
-                    Relative(id = "", name = "", relationship = "", url = "", wikiUrl = ""))
+                    Relative(id = "", name = "", relationship = "", url = "", wikiUrl = "")
                 )
+            )
 
         emit(character)
     }

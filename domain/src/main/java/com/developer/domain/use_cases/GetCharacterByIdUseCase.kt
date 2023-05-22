@@ -5,7 +5,7 @@ import com.developer.domain.repository.CharacterRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetCharacterByIdUseCase @Inject constructor (
+class GetCharacterByIdUseCase @Inject constructor(
     private val characterRepository: CharacterRepository
 ) : BaseUseCase<Int, Flow<CharacterEntityItem>> {
 

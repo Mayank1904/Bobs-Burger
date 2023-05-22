@@ -25,6 +25,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 import java.io.IOException
+
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -32,7 +33,7 @@ class GetCharacterListUseCaseTest : BaseUseCaseTest() {
 
     private var characterRepository = mock<CharacterRepository>()
 
-    val getCharactersUseCase by lazy {  GetCharactersUseCase(characterRepository) }
+    val getCharactersUseCase by lazy { GetCharactersUseCase(characterRepository) }
 
     @Before
     fun setUp() {
@@ -51,16 +52,20 @@ class GetCharacterListUseCaseTest : BaseUseCaseTest() {
 
 
     @Test
-    fun `get bob characters should return error result with exception`() = dispatcher.runBlockingTest {
-        whenever(characterRepository.getCharacters()) doAnswer { throw IOException() }
+    fun `get bob characters should return error result with exception`() =
+        dispatcher.runBlockingTest {
+            whenever(characterRepository.getCharacters()) doAnswer { throw IOException() }
 
-        // Act (When)
-        launch(exceptionHandler) { getCharactersUseCase(Unit).single() }
+            // Act (When)
+            launch(exceptionHandler) { getCharactersUseCase(Unit).single() }
 
-        // Assert (Then)
-        assertThat(exceptionHandler.uncaughtExceptions.first(), instanceOf(IOException::class.java))
-        verify(characterRepository, times(1)).getCharacters()
-    }
+            // Assert (Then)
+            assertThat(
+                exceptionHandler.uncaughtExceptions.first(),
+                instanceOf(IOException::class.java)
+            )
+            verify(characterRepository, times(1)).getCharacters()
+        }
 
     private fun getCharacters(): Flow<List<CharacterEntityItem>> = flow {
         val characters = listOf(
@@ -77,22 +82,8 @@ class GetCharacterListUseCaseTest : BaseUseCaseTest() {
                 url = "",
                 wikiUrl = "",
                 relatives = listOf(
-                    Relative(id = "", name = "", relationship = "", url = "", wikiUrl = ""))
-                ),
-            CharacterEntityItem(
-                id = 441,
-                age = "12",
-                name = "",
-                image = "",
-                gender = "",
-                hairColor = "",
-                occupation = "",
-                firstEpisode = "",
-                voicedBy = "",
-                url = "",
-                wikiUrl = "",
-                relatives = listOf(
-                    Relative(id = "", name = "", relationship = "", url = "", wikiUrl = ""))
+                    Relative(id = "", name = "", relationship = "", url = "", wikiUrl = "")
+                )
             ),
             CharacterEntityItem(
                 id = 441,
@@ -107,9 +98,26 @@ class GetCharacterListUseCaseTest : BaseUseCaseTest() {
                 url = "",
                 wikiUrl = "",
                 relatives = listOf(
-                    Relative(id = "", name = "", relationship = "", url = "", wikiUrl = ""))
+                    Relative(id = "", name = "", relationship = "", url = "", wikiUrl = "")
+                )
+            ),
+            CharacterEntityItem(
+                id = 441,
+                age = "12",
+                name = "",
+                image = "",
+                gender = "",
+                hairColor = "",
+                occupation = "",
+                firstEpisode = "",
+                voicedBy = "",
+                url = "",
+                wikiUrl = "",
+                relatives = listOf(
+                    Relative(id = "", name = "", relationship = "", url = "", wikiUrl = "")
+                )
             )
-            )
+        )
 
         emit(characters)
     }

@@ -7,21 +7,21 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
-import com.developer.domain.models.CharacterEntityItem
 import com.developer.presentation.databinding.CharacterListItemBinding
+import com.developer.presentation.models.CharacterModel
 import com.developer.presentation.ui.base.BaseAdapter
 import javax.inject.Inject
 
 class CharacterAdapter @Inject constructor(
     private val glide: RequestManager
-) : BaseAdapter<CharacterEntityItem>() {
+) : BaseAdapter<CharacterModel>() {
 
-    private val diffCallback = object : DiffUtil.ItemCallback<CharacterEntityItem>() {
-        override fun areItemsTheSame(oldItem: CharacterEntityItem, newItem: CharacterEntityItem): Boolean {
+    private val diffCallback = object : DiffUtil.ItemCallback<CharacterModel>() {
+        override fun areItemsTheSame(oldItem: CharacterModel, newItem: CharacterModel): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: CharacterEntityItem, newItem: CharacterEntityItem): Boolean {
+        override fun areContentsTheSame(oldItem: CharacterModel, newItem: CharacterModel): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
     }
@@ -35,9 +35,9 @@ class CharacterAdapter @Inject constructor(
     }
 
     inner class CharacterViewHolder(private val binding: CharacterListItemBinding) :
-        RecyclerView.ViewHolder(binding.root), Binder<CharacterEntityItem> {
+        RecyclerView.ViewHolder(binding.root), Binder<CharacterModel> {
         @SuppressLint("SetTextI18n")
-        override fun bind(item: CharacterEntityItem) {
+        override fun bind(item: CharacterModel) {
             binding.apply {
                 textViewCharacterName.text = item.name
                 textViewEpisode.text = "First Episode: ${item.firstEpisode}"
