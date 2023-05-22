@@ -56,16 +56,12 @@ class CharacterRepositoryImpTest : BaseDataTest() {
             // Assert (Then)
             TestCase.assertEquals(characters?.size, 0)
             verify(characterMapper, times(1)).mapFromModel(any())
-//            verify(characterItemMapper, times(1)).mapFromModel(any())
-
         }
 
     @Test
     fun `get character by id should return character`() =
         dispatcher.runBlockingTest {
             val characterId = 448
-//            val mockCharacter = mock<CharacterEntityItemModel>()
-//            `when`(mockCharacter.image) doReturn ""
 
             `when`(characterService.getCharacter(characterId)) doReturn getCharacter()
 
@@ -75,8 +71,6 @@ class CharacterRepositoryImpTest : BaseDataTest() {
             // Assert (Then)
             assertEquals(character?.id, null)
             verify(characterItemMapper, times(1)).mapFromModel(any())
-//            verify(characterItemMapper, times(1)).mapFromModel(any())
-
         }
 
     private fun getCharacters(): List<CharacterEntityItemModel> =

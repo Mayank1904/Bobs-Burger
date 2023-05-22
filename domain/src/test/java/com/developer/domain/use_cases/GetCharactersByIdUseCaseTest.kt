@@ -32,10 +32,11 @@ class GetCharacterByIdUseCaseTest : BaseUseCaseTest() {
 
     private var characterRepository = mock<CharacterRepository>()
 
-    val getCharacterByIdUseCase by lazy {  GetCharacterByIdUseCase(characterRepository) }
+    lateinit var getCharacterByIdUseCase : GetCharacterByIdUseCase
 
     @Before
     fun setUp() {
+        getCharacterByIdUseCase = GetCharacterByIdUseCase(characterRepository)
     }
 
     @Test

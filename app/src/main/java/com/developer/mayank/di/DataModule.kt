@@ -3,7 +3,7 @@ package com.developer.mayank.di
 import com.developer.data.remote.api.CharacterService
 import com.developer.data.repository.CharacterRepositoryImpl
 import com.developer.domain.repository.CharacterRepository
-import com.developer.mayank.utils.Constants
+import com.developer.mayank.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +18,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
-
+    private const val OK_HTTP_TIMEOUT = 60L
     @Provides
     @Singleton
     fun provideCharacterRemote(characterRemoteImpl: CharacterRepositoryImpl): CharacterRepository {
@@ -29,13 +29,13 @@ object DataModule {
     @Singleton
     fun provideCharacterService(): CharacterService {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
-        return Retrofit.Builder().baseUrl(Constants.BASE_URL)
+        return Retrofit.Builder().baseUrl(BuildConfig.BASE_URL)
             .client(OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor.apply {
                     httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
                 })
-                .connectTimeout(Constants.OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
-            .readTimeout(Constants.OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
+                .connectTimeout(OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
             .build())
             .addConverterFactory(MoshiConverterFactory.create())
             .build()

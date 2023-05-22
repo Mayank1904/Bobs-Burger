@@ -15,7 +15,7 @@ android {
         targetSdkVersion androidTargetSdkVersion
         versionCode appVersionCode
         versionName appVersionName
-
+        buildConfigField "String", "BASE_URL", "\"https://bobsburgers-api.herokuapp.com/\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -32,10 +32,6 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
-    buildFeatures {
-        viewBinding true
-    }
 }
 
 dependencies {
@@ -43,29 +39,13 @@ dependencies {
     implementation project(':domain')
     implementation project(':data')
     implementation project(':presentation')
-
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation networkDependencies.retrofit
-    implementation uiModuleDependencies.kotlin
-    implementation uiModuleDependencies.coreKtx
-    implementation uiModuleDependencies.appCompat
-    implementation uiModuleDependencies.material
-    implementation uiModuleDependencies.constraint
-    implementation uiModuleDependencies.navigationFragmentKtx
-    implementation uiModuleDependencies.navigationUiKtx
-    implementation uiModuleDependencies.activityKtx
-    // LifeCycle
-    implementation uiModuleDependencies.lifeCycle
     // Dagger-Hilt
     implementation uiModuleDependencies.daggerHilt
-    kapt uiModuleDependencies.daggerHiltKapt
-    // Coroutines
-    implementation uiModuleDependencies.coroutines
-    // Glide
+    kapt uiModuleDependencies.daggerHiltKapt    // Glide
     implementation uiModuleDependencies.glide
     kapt uiModuleDependencies.glideKapt
-    // Timber
-    implementation uiModuleDependencies.timber
 
     implementation remoteModuleDependencies.network
 }

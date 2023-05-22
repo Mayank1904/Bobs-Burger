@@ -1,50 +1,40 @@
 package com.developer.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.developer.domain.models.CharacterEntityItem
 import com.developer.domain.use_cases.GetCharactersUseCase
-import com.developer.presentation.utils.CoroutineContextProvider
-import com.developer.presentation.utils.UiAwareModel
+import com.developer.presentation.utils.ExceptionHandler
+import com.developer.presentation.utils.Result
+import com.developer.presentation.utils.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-sealed class CharacterUIModel : UiAwareModel() {
-    object Loading : CharacterUIModel()
-    data class Error(var error: String = "") : CharacterUIModel()
-    data class Success(val data: List<CharacterEntityItem>) : CharacterUIModel()
-}
 
 @HiltViewModel
  class BBCharactersViewModel @Inject constructor(
-    private val getCharacterUseCase: GetCharactersUseCase,
-    coroutineContextProvider: CoroutineContextProvider) : BaseViewModel(coroutineContextProvider) {
+    private val getCharacterUseCase: GetCharactersUseCase) : ViewModel() {
 
-    private val _characterList = MutableLiveData<CharacterUIModel>()
-    private var characterList : LiveData<CharacterUIModel> = _characterList
+    private val _characterListFlow = MutableStateFlow<CharacterUIModel>(CharacterUIModel.Loading)
+    val characterListFlow: StateFlow<CharacterUIModel> = _characterListFlow.asStateFlow()
 
-    override val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
-        _characterList.postValue(CharacterUIModel.Error(exception.message ?: "Error"))
-
-        }
-
-    fun getCharacterList(): LiveData<CharacterUIModel> {
-        return characterList
-    }
-
-     fun getCharacters() {
-         _characterList.postValue(CharacterUIModel.Loading)
-         launchCoroutineIO {
-            loadCharacters()
-        }
-    }
-
-    private suspend fun loadCharacters() {
-        getCharacterUseCase(Unit).collectLatest {
-            _characterList.postValue(CharacterUIModel.Success(it))
-        }
-    }
+     fun loadCharacters() =
+         viewModelScope.launch {
+                 getCharacterUseCase(Unit).flowOn(Dispatchers.IO).asResult().collect { result ->
+                     _characterListFlow.update {
+                         when(result){
+                             is Result.Loading -> CharacterUIModel.Loading
+                             is Result.Success -> CharacterUIModel.Success(result.data)
+                             is Result.Error -> CharacterUIModel.Error(ExceptionHandler.parse(result.exception))
+                         }
+                     }
+                 }
+         }
 
 }

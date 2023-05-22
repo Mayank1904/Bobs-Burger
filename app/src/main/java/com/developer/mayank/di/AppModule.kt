@@ -4,7 +4,6 @@ import android.content.Context
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.developer.mayank.R
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,8 +21,8 @@ object AppModule {
         @ApplicationContext context: Context
     ) = Glide.with(context).setDefaultRequestOptions(
         RequestOptions()
-            .placeholder(R.drawable.ic_launcher_background)
-            .error(R.drawable.ic_launcher_background)
+//            .placeholder(R.drawable.ic_launcher_background)
+//            .error(R.drawable.ic_launcher_background)
             .diskCacheStrategy(DiskCacheStrategy.DATA)
     )
 

@@ -14,6 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Bobs-Burger"
 include ':app'
-include ':presentation'
 include ':domain'
 include ':data'
+include ':presentation'

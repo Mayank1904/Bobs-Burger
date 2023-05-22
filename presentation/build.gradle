@@ -52,6 +52,9 @@ dependencies {
     // LifeCycle
     implementation presentationModuleDependencies.lifeCycle
 
+    // Glide
+    implementation uiModuleDependencies.glide
+    kapt uiModuleDependencies.glideKapt
 
     testImplementation testDependencies.coroutinesTest
     testImplementation testDependencies.jUnit
