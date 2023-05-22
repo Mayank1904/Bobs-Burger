@@ -1,7 +1,6 @@
 package com.developer.data.utils
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineExceptionHandler
 import org.junit.Rule
 
 @ExperimentalCoroutinesApi
@@ -14,7 +13,4 @@ abstract class BaseDataTest {
     val testRule = CoroutineTestRule()
 
     val dispatcher = testRule.dispatcher
-
-    val exceptionHandler = TestCoroutineExceptionHandler()
-
 }

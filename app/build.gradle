@@ -15,7 +15,6 @@ android {
         targetSdkVersion androidTargetSdkVersion
         versionCode appVersionCode
         versionName appVersionName
-        buildConfigField "String", "BASE_URL", "\"https://bobsburgers-api.herokuapp.com/\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -40,12 +39,8 @@ dependencies {
     implementation project(':data')
     implementation project(':presentation')
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation networkDependencies.retrofit
-    // Dagger-Hilt
-    implementation uiModuleDependencies.daggerHilt
-    kapt uiModuleDependencies.daggerHiltKapt    // Glide
-    implementation uiModuleDependencies.glide
-    kapt uiModuleDependencies.glideKapt
 
-    implementation remoteModuleDependencies.network
+    // Dagger Hilt
+    implementation uiModuleDependencies.daggerHilt
+    kapt uiModuleDependencies.daggerHiltKapt
 }

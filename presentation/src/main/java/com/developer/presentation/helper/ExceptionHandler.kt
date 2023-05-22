@@ -1,4 +1,4 @@
-package com.developer.presentation.utils
+package com.developer.presentation.helper
 
 import androidx.annotation.StringRes
 import com.developer.presentation.R

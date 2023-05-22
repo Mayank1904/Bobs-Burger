@@ -1,11 +1,10 @@
-package com.developer.presentation
+package com.developer.presentation.viewmodel
 
 import com.developer.domain.models.CharacterEntityItem
 import com.developer.domain.models.Relative
 import com.developer.domain.use_cases.GetCharactersUseCase
+import com.developer.presentation.MainDispatcherRule
 import com.developer.presentation.mappers.CharacterMapper
-import com.developer.presentation.viewmodel.BBCharactersViewModel
-import com.developer.presentation.viewmodel.CharacterUIModel
 import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -86,11 +85,13 @@ class BBCharacterListViewModelTest {
         runTest {
             // Arrange (Given)
             val errorMessage = "Internal server error"
-            whenever(charactersUseCase(Unit)) doAnswer { throw IOException(errorMessage) }
+            whenever(charactersUseCase.invoke(Unit)) doAnswer { throw IOException(errorMessage) }
 
             Assert.assertEquals(CharacterUIModel.Loading, viewModel.characterListFlow.value)
             // Act (When)
             viewModel.loadCharacters()
+
+
         }
 
     private fun getCharacters(): List<CharacterEntityItem> = listOf(

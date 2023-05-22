@@ -1,12 +1,11 @@
-package com.developer.presentation
+package com.developer.presentation.viewmodel
 
 import com.developer.domain.models.CharacterEntityItem
 import com.developer.domain.models.Relative
 import com.developer.domain.repository.CharacterRepository
 import com.developer.domain.use_cases.GetCharacterByIdUseCase
+import com.developer.presentation.MainDispatcherRule
 import com.developer.presentation.mappers.CharacterItemMapper
-import com.developer.presentation.viewmodel.BBCharacterDetailViewModel
-import com.developer.presentation.viewmodel.CharacterDetailUIModel
 import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi

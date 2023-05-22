@@ -3,10 +3,9 @@ package com.developer.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developer.domain.use_cases.GetCharactersUseCase
+import com.developer.presentation.extension.asResult
+import com.developer.presentation.helper.ExceptionHandler
 import com.developer.presentation.mappers.CharacterMapper
-import com.developer.presentation.utils.ExceptionHandler
-import com.developer.presentation.utils.Result
-import com.developer.presentation.utils.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

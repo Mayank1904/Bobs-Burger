@@ -1,9 +1,9 @@
-package com.developer.mayank.di
+package com.developer.data.di
 
+import com.developer.data.BuildConfig
 import com.developer.data.remote.api.CharacterService
 import com.developer.data.repository.CharacterRepositoryImpl
 import com.developer.domain.repository.CharacterRepository
-import com.developer.mayank.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
