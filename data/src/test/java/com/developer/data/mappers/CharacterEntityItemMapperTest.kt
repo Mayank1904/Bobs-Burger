@@ -5,7 +5,6 @@ import com.developer.data.models.Relative
 import com.developer.data.utils.BaseDataTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -26,7 +25,7 @@ class CharacterEntityItemMapperTest : BaseDataTest() {
 
     @Test
     fun `map  character entity item should return converted character entity item`() =
-        dispatcher.runBlockingTest {
+        dispatcher.run {
             // Arrange (Given)
             val character = getCharacters()[0]
             // Act (When)

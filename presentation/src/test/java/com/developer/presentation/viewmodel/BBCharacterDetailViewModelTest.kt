@@ -3,7 +3,7 @@ package com.developer.presentation.viewmodel
 import com.developer.domain.models.CharacterEntityItem
 import com.developer.domain.models.Relative
 import com.developer.domain.repository.CharacterRepository
-import com.developer.domain.use_cases.GetCharacterByIdUseCase
+import com.developer.domain.usecases.GetCharacterByIdUseCase
 import com.developer.presentation.MainDispatcherRule
 import com.developer.presentation.mappers.CharacterItemMapper
 import com.nhaarman.mockitokotlin2.doAnswer
@@ -49,7 +49,6 @@ class BBCharacterDetailViewModelTest {
     fun `get character detail with character Id should return character list from use-case`() =
         runTest {
             // Arrange (Given)
-            val characterId = 448
             val character = getCharacters()[0]
             `when`(characterByIdUseCase(448)).thenReturn(flowOf(character))
             Assert.assertEquals(CharacterDetailUIModel.Loading, viewModel.characterDetailFlow.value)
@@ -68,7 +67,6 @@ class BBCharacterDetailViewModelTest {
     @Test
     fun `get character detail with character Id should return error from use-case`() =
         runTest {
-            val characterId = 441
             // Arrange (Given)
             val errorMessage = "Internal server error"
             whenever(characterByIdUseCase(characterId)) doAnswer { throw IOException(errorMessage) }
@@ -129,5 +127,9 @@ class BBCharacterDetailViewModelTest {
             )
         )
     )
+
+    companion object {
+        private const val characterId: Int = 441
+    }
 
 }

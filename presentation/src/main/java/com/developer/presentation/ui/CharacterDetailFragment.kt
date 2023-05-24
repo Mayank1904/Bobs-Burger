@@ -54,24 +54,23 @@ class CharacterDetailFragment : Fragment() {
                     is CharacterDetailUIModel.Success -> {
                         result.data.let { character ->
                             binding.apply {
-                                binding.progressBarCharacterDetail.makeGone()
+                                progressBarCharacterDetail.makeGone()
                                 cardViewImage.makeVisible()
-                                textViewCharacterName.text = character.name
-                                glide.load(character.image).into(imageViewCharacter)
-                                textViewOccupation.text = character.occupation
-                                textViewGender.text = character.gender
-                                textViewVoicedBy.text = character.voicedBy
-                                textViewHairColor.text = character.hairColor
+                                with(character){
+                                    textViewCharacterName.text = name
+                                    glide.load(image).into(imageViewCharacter)
+                                    textViewOccupation.text = occupation
+                                    textViewGender.text = gender
+                                    textViewVoicedBy.text = voicedBy
+                                    textViewHairColor.text = hairColor
+                                }
                             }
                         }
                     }
-
                     is CharacterDetailUIModel.Error -> {
                         binding.progressBarCharacterDetail.makeGone()
-                        showSnackBar(binding.root, getString(result.error))
-
+                        showSnackBar(binding.root, result.error?.localizedMessage!!)
                     }
-
                     is CharacterDetailUIModel.Loading -> {
                         binding.progressBarCharacterDetail.makeVisible()
                     }

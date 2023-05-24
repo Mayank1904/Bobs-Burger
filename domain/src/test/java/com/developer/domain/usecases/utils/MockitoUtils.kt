@@ -1,4 +1,4 @@
-package com.developer.domain.use_cases.utils
+package com.developer.domain.usecases.utils
 
 import org.mockito.Mockito
 import org.mockito.stubbing.OngoingStubbing

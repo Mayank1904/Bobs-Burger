@@ -15,7 +15,7 @@ import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.singleOrNull
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -48,11 +48,11 @@ class CharacterRepositoryImpTest : BaseDataTest() {
 
     @Test
     fun `get characters should return character list`() =
-        dispatcher.runBlockingTest {
-            `when`(characterService.getCharacters()) doReturn getCharacters()
+        runTest {
+            `when`(characterService.getCharacters(5)) doReturn getCharacters()
 
             // Act (When)
-            val characters = characterRepositoryImpl.getCharacters().singleOrNull()
+            val characters = characterRepositoryImpl.getCharacters(5).singleOrNull()
 
             // Assert (Then)
             TestCase.assertEquals(characters?.size, 0)
@@ -61,9 +61,7 @@ class CharacterRepositoryImpTest : BaseDataTest() {
 
     @Test
     fun `get character by id should return character`() =
-        dispatcher.runBlockingTest {
-            val characterId = 448
-
+        runTest {
             `when`(characterService.getCharacter(characterId)) doReturn getCharacter()
 
             // Act (When)
@@ -127,7 +125,7 @@ class CharacterRepositoryImpTest : BaseDataTest() {
         )
 
     private fun getCharacter(): CharacterEntityItemModel = CharacterEntityItemModel(
-        id = 448,
+        id = 441,
         age = "12",
         name = "",
         image = "",
@@ -148,4 +146,8 @@ class CharacterRepositoryImpTest : BaseDataTest() {
             )
         )
     )
+
+    companion object {
+        private const val characterId: Int = 441
+    }
 }

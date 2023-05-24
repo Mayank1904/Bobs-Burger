@@ -18,7 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CharacterEntityMapperTest : BaseDataTest() {
 
-    lateinit var characterEntityMapperTest: CharacterEntityMapper
+    private lateinit var characterEntityMapperTest: CharacterEntityMapper
 
     @Before
     fun setUp() {
@@ -27,7 +27,7 @@ class CharacterEntityMapperTest : BaseDataTest() {
 
     @Test
     fun `map  character entity item should return converted character entity item`() =
-        dispatcher.runBlockingTest {
+        dispatcher.run {
             // Arrange (Given)
             val characters = getCharacters()
             // Act (When)
@@ -35,9 +35,9 @@ class CharacterEntityMapperTest : BaseDataTest() {
             val character = characterEntityMapperTest.mapFromModel(characters)
 
             // Assert (Then)
-            assertEquals(character[0].id, 441)
-            assertEquals(character[0].age, "12")
-            assertEquals(character[0].gender, "Male")
+            assertEquals(character[0].id, characterId)
+            assertEquals(character[0].age, age)
+            assertEquals(character[0].gender, gender)
 
         }
 
@@ -92,5 +92,11 @@ class CharacterEntityMapperTest : BaseDataTest() {
                 )
             )
         )
+    }
+
+    companion object {
+        private const val characterId: Int = 441
+        private const val age : String = "12"
+        private const val gender: String = "Male"
     }
 }

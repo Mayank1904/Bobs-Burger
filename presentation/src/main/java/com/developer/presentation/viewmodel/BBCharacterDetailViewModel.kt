@@ -2,9 +2,8 @@ package com.developer.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developer.domain.use_cases.GetCharacterByIdUseCase
+import com.developer.domain.usecases.GetCharacterByIdUseCase
 import com.developer.presentation.extension.asResult
-import com.developer.presentation.helper.ExceptionHandler
 import com.developer.presentation.mappers.CharacterItemMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,7 +27,7 @@ class BBCharacterDetailViewModel @Inject constructor(
         getCharacterByIdUseCase(characterId).asResult().collect { result ->
             _characterDetailFlow.update {
                 when (result) {
-                    is Result.Error -> CharacterDetailUIModel.Error(ExceptionHandler.parse(result.exception))
+                    is Result.Error -> CharacterDetailUIModel.Error(result.exception)
                     is Result.Loading -> CharacterDetailUIModel.Loading
                     is Result.Success -> CharacterDetailUIModel.Success(
                         characterItemMapper.mapFromModel(

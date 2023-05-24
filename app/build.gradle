@@ -39,7 +39,9 @@ dependencies {
     implementation project(':data')
     implementation project(':presentation')
     implementation fileTree(dir: "libs", include: ["*.jar"])
-
+    // Glide
+    implementation uiModuleDependencies.glide
+    kapt uiModuleDependencies.glideKapt
     // Dagger Hilt
     implementation uiModuleDependencies.daggerHilt
     kapt uiModuleDependencies.daggerHiltKapt

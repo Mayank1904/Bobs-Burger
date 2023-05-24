@@ -44,9 +44,6 @@ dependencies {
 
     implementation uiModuleDependencies.daggerHilt
     kapt uiModuleDependencies.daggerHiltKapt
-    // Glide
-    implementation uiModuleDependencies.glide
-    kapt uiModuleDependencies.glideKapt
 
     testImplementation testDependencies.coroutinesTest
     testImplementation testDependencies.jUnit

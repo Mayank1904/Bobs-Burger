@@ -1,10 +1,10 @@
-package com.developer.domain.use_cases
+package com.developer.domain.usecases
 
 import com.developer.domain.models.CharacterEntityItem
 import com.developer.domain.models.Relative
 import com.developer.domain.repository.CharacterRepository
-import com.developer.domain.use_cases.utils.BaseUseCaseTest
-import com.developer.domain.use_cases.utils.mock
+import com.developer.domain.usecases.utils.BaseUseCaseTest
+import com.developer.domain.usecases.utils.mock
 import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.times
@@ -42,29 +42,29 @@ class GetCharacterListUseCaseTest : BaseUseCaseTest() {
     @Test
     fun `get bob characters should return success with bob character list`() =
         dispatcher.runBlockingTest {
-            whenever(characterRepository.getCharacters()) doReturn getCharacters()
+            whenever(characterRepository.getCharacters(5)) doReturn getCharacters()
 
-            val characters = getCharactersUseCase(Unit).single()
+            val characters = getCharactersUseCase(5).single()
 
             assertEquals(characters.size, 3)
-            verify(characterRepository, times(1)).getCharacters()
+            verify(characterRepository, times(1)).getCharacters(5)
         }
 
 
     @Test
     fun `get bob characters should return error result with exception`() =
         dispatcher.runBlockingTest {
-            whenever(characterRepository.getCharacters()) doAnswer { throw IOException() }
+            whenever(characterRepository.getCharacters(5)) doAnswer { throw IOException() }
 
             // Act (When)
-            launch(exceptionHandler) { getCharactersUseCase(Unit).single() }
+            launch(exceptionHandler) { getCharactersUseCase(5).single() }
 
             // Assert (Then)
             assertThat(
                 exceptionHandler.uncaughtExceptions.first(),
                 instanceOf(IOException::class.java)
             )
-            verify(characterRepository, times(1)).getCharacters()
+            verify(characterRepository, times(1)).getCharacters(5)
         }
 
     private fun getCharacters(): Flow<List<CharacterEntityItem>> = flow {

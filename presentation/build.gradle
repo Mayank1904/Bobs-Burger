@@ -63,4 +63,5 @@ dependencies {
     testImplementation testDependencies.mockitoInline
     testImplementation testDependencies.androidxArchCore
     testImplementation testDependencies.robolectric
+    testImplementation testDependencies.mockk
 }

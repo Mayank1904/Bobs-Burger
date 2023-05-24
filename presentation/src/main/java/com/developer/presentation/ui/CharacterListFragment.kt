@@ -65,7 +65,7 @@ class CharacterListFragment : Fragment() {
 
                     is CharacterUIModel.Error -> {
                         binding.progressBarCharacters.makeGone()
-                        showSnackBar(binding.root, getString(result.error))
+                        showSnackBar(binding.root, result.error?.localizedMessage!!)
                     }
 
                     is CharacterUIModel.Loading -> {

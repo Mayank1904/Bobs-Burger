@@ -4,7 +4,7 @@ import com.developer.domain.models.CharacterEntityItem
 import kotlinx.coroutines.flow.Flow
 
 interface CharacterRepository {
-    suspend fun getCharacters(): Flow<List<CharacterEntityItem>>
+    suspend fun getCharacters(limit: Int): Flow<List<CharacterEntityItem>>
     suspend fun getCharacter(characterId: Int): Flow<CharacterEntityItem>
 
 }

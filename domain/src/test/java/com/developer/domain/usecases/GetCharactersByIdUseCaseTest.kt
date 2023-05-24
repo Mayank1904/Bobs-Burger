@@ -1,10 +1,10 @@
-package com.developer.domain.use_cases
+package com.developer.domain.usecases
 
 import com.developer.domain.models.CharacterEntityItem
 import com.developer.domain.models.Relative
 import com.developer.domain.repository.CharacterRepository
-import com.developer.domain.use_cases.utils.BaseUseCaseTest
-import com.developer.domain.use_cases.utils.mock
+import com.developer.domain.usecases.utils.BaseUseCaseTest
+import com.developer.domain.usecases.utils.mock
 import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.times
@@ -43,7 +43,6 @@ class GetCharacterByIdUseCaseTest : BaseUseCaseTest() {
     @Test
     fun `get bob character by id should return success with bob character`() =
         dispatcher.runBlockingTest {
-            val characterId = 448
             whenever(characterRepository.getCharacter(characterId)) doReturn getCharacter()
 
             val character = getCharacterByIdUseCase(characterId).single()
@@ -57,7 +56,6 @@ class GetCharacterByIdUseCaseTest : BaseUseCaseTest() {
     @Test
     fun `get bob character by id should return error result with exception`() =
         dispatcher.runBlockingTest {
-            val characterId = 448
             whenever(characterRepository.getCharacter(characterId)) doAnswer { throw IOException() }
 
             // Act (When)
@@ -91,5 +89,9 @@ class GetCharacterByIdUseCaseTest : BaseUseCaseTest() {
             )
 
         emit(character)
+    }
+
+    companion object {
+        private const val characterId: Int = 448
     }
 }

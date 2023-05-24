@@ -2,7 +2,7 @@ package com.developer.presentation.viewmodel
 
 import com.developer.domain.models.CharacterEntityItem
 import com.developer.domain.models.Relative
-import com.developer.domain.use_cases.GetCharactersUseCase
+import com.developer.domain.usecases.GetCharactersUseCase
 import com.developer.presentation.MainDispatcherRule
 import com.developer.presentation.mappers.CharacterMapper
 import com.nhaarman.mockitokotlin2.doAnswer
@@ -48,7 +48,7 @@ class BBCharacterListViewModelTest {
         runTest {
             // Arrange (Given)
             val characters = getCharacters()
-            `when`(charactersUseCase(Unit)).thenReturn(flowOf(characters))
+            `when`(charactersUseCase(5)).thenReturn(flowOf(characters))
             Assert.assertEquals(CharacterUIModel.Loading, viewModel.characterListFlow.value)
 
             // Act (When)
@@ -69,7 +69,7 @@ class BBCharacterListViewModelTest {
             val characters = listOf<CharacterEntityItem>()
             Assert.assertEquals(CharacterUIModel.Loading, viewModel.characterListFlow.value)
 
-            `when`(charactersUseCase(Unit)).thenReturn(flowOf(characters))
+            `when`(charactersUseCase(5)).thenReturn(flowOf(characters))
             // Act (When)
             viewModel.loadCharacters()
 
@@ -85,12 +85,11 @@ class BBCharacterListViewModelTest {
         runTest {
             // Arrange (Given)
             val errorMessage = "Internal server error"
-            whenever(charactersUseCase.invoke(Unit)) doAnswer { throw IOException(errorMessage) }
+            whenever(charactersUseCase.invoke(5)) doAnswer { throw IOException(errorMessage) }
 
             Assert.assertEquals(CharacterUIModel.Loading, viewModel.characterListFlow.value)
             // Act (When)
             viewModel.loadCharacters()
-
 
         }
 

@@ -39,16 +39,19 @@ class CharacterAdapter @Inject constructor(
         @SuppressLint("SetTextI18n")
         override fun bind(item: CharacterModel) {
             binding.apply {
-                textViewCharacterName.text = item.name
-                textViewEpisode.text = "First Episode: ${item.firstEpisode}"
-                textViewVoicedBy.text = item.voicedBy
+                with(item){
+                    textViewCharacterName.text = name
+                    textViewEpisode.text = "First Episode: $firstEpisode"
+                    textViewVoicedBy.text = voicedBy
 
-                glide.load(item.image).into(imageViewCharacter)
-                root.setOnClickListener {
-                    onItemClickListener?.let { itemClick ->
-                        itemClick(item)
+                    glide.load(image).into(imageViewCharacter)
+                    root.setOnClickListener {
+                        onItemClickListener?.let { itemClick ->
+                            itemClick(this)
+                        }
                     }
                 }
+
             }
         }
     }

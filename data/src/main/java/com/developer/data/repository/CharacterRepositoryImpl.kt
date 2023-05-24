@@ -14,9 +14,9 @@ class CharacterRepositoryImpl @Inject constructor(
     private val characterEntityMapper: CharacterEntityMapper,
     private val characterEntityItemMapper: CharacterEntityItemMapper
 ) : CharacterRepository {
-    override suspend fun getCharacters(): Flow<List<CharacterEntityItem>> =
+    override suspend fun getCharacters(limit: Int): Flow<List<CharacterEntityItem>> =
         flow {
-            val characters = characterService.getCharacters()
+            val characters = characterService.getCharacters(limit)
             emit(characterEntityMapper.mapFromModel(characters))
         }
 

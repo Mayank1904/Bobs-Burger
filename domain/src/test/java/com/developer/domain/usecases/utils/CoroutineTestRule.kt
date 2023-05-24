@@ -1,4 +1,4 @@
-package com.developer.domain.use_cases.utils
+package com.developer.domain.usecases.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

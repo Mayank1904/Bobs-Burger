@@ -3,13 +3,13 @@ ext {
     androidMinSdkVersion = 21
     androidTargetSdkVersion = 29
     androidCompileSdkVersion = 33
-    androidBuildToolsVersion = "30.0.2"
+    androidBuildToolsVersion = '30.0.2'
     appVersionCode = 1
     appVersionName = '1.0'
 
     // Core dependencies
     kotlinVersion = '1.8.0'
-    javaxInjectVersion = "1"
+    javaxInjectVersion = '1'
     coreKtxVersion = '1.7.0'
     appCompatVersion = '1.4.1'
     materialVersion = '1.5.0'
@@ -52,19 +52,20 @@ ext {
     loggingInterceptorVersion = '4.2.1'
 
     // test dependencies
-    junitVersion = "4.13"
-    assertJVersion = "3.11.1"
-    androidTestRuleVersion = "1.1.0"
-    androidTestRunnerVersion = "1.1.0"
-    axTestCore = "1.1.0"
-    axTestJunit = "1.1.0"
+    junitVersion = '4.13'
+    assertJVersion = '3.11.1'
+    androidTestRuleVersion = '1.1.0'
+    androidTestRunnerVersion = '1.1.0'
+    axTestCore = '1.1.0'
+    axTestJunit = '1.1.0'
     mockitoCore = '2.7.1'
-    mockitoKotlinVersion = "2.1.0"
-    mockitoCoreVersion = "2.25.0"
-    mockitoInlineVersion = "2.13.0"
-    androidxArchCoreVersion = "2.1.0"
-    extJunitVersion = "1.1.1"
-    robolectricVersion = "4.5.1"
+    mockitoKotlinVersion = '2.1.0'
+    mockitoCoreVersion = '2.25.0'
+    mockitoInlineVersion = '2.13.0'
+    androidxArchCoreVersion = '2.1.0'
+    extJunitVersion = '1.1.1'
+    robolectricVersion = '4.5.1'
+    mockkVersion = '1.13.4'
 
     // Common dependencies
     kotlinDependencies = [
@@ -85,7 +86,8 @@ ext {
             mockitoInline       : "org.mockito:mockito-inline:$mockitoInlineVersion",
             androidxArchCore    : "androidx.arch.core:core-testing:$androidxArchCoreVersion",
             androidxTestExtJunit: "androidx.test.ext:$extJunitVersion",
-            robolectric         : "org.robolectric:robolectric:$robolectricVersion"
+            robolectric         : "org.robolectric:robolectric:$robolectricVersion",
+            mockk               : "io.mockk:mockk:$mockkVersion"
     ]
 
     lifeCycleDependencies = [
