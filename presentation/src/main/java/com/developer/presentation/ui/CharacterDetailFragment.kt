@@ -56,7 +56,7 @@ class CharacterDetailFragment : Fragment() {
                             binding.apply {
                                 progressBarCharacterDetail.makeGone()
                                 cardViewImage.makeVisible()
-                                with(character){
+                                with(character) {
                                     textViewCharacterName.text = name
                                     glide.load(image).into(imageViewCharacter)
                                     textViewOccupation.text = occupation
@@ -67,10 +67,12 @@ class CharacterDetailFragment : Fragment() {
                             }
                         }
                     }
+
                     is CharacterDetailUIModel.Error -> {
                         binding.progressBarCharacterDetail.makeGone()
                         showSnackBar(binding.root, result.error?.localizedMessage!!)
                     }
+
                     is CharacterDetailUIModel.Loading -> {
                         binding.progressBarCharacterDetail.makeVisible()
                     }

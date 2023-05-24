@@ -39,7 +39,7 @@ class CharacterAdapter @Inject constructor(
         @SuppressLint("SetTextI18n")
         override fun bind(item: CharacterModel) {
             binding.apply {
-                with(item){
+                with(item) {
                     textViewCharacterName.text = name
                     textViewEpisode.text = "First Episode: $firstEpisode"
                     textViewVoicedBy.text = voicedBy

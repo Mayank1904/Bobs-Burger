@@ -5,7 +5,6 @@ import com.developer.data.models.Relative
 import com.developer.data.utils.BaseDataTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -96,7 +95,7 @@ class CharacterEntityMapperTest : BaseDataTest() {
 
     companion object {
         private const val characterId: Int = 441
-        private const val age : String = "12"
+        private const val age: String = "12"
         private const val gender: String = "Male"
     }
 }

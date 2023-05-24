@@ -32,6 +32,7 @@ class BBCharactersViewModel @Inject constructor(
                                 result.data
                             )
                         )
+
                         is Result.Error -> CharacterUIModel.Error(result.exception)
                     }
                 }
