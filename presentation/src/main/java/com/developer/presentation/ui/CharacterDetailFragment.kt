@@ -70,7 +70,7 @@ class CharacterDetailFragment : Fragment() {
 
                     is CharacterDetailUIModel.Error -> {
                         binding.progressBarCharacterDetail.makeGone()
-                        showSnackBar(binding.root, result.error?.localizedMessage!!)
+                        showSnackBar(binding.root, result.error!!)
                     }
 
                     is CharacterDetailUIModel.Loading -> {

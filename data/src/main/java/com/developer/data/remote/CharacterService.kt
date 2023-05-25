@@ -1,4 +1,4 @@
-package com.developer.data.remote.api
+package com.developer.data.remote
 
 import com.developer.data.models.CharacterEntityItemModel
 import retrofit2.http.GET

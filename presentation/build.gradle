@@ -13,7 +13,6 @@ android {
         targetSdkVersion androidTargetSdkVersion
         versionCode appVersionCode
         versionName appVersionName
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
@@ -63,5 +62,4 @@ dependencies {
     testImplementation testDependencies.mockitoInline
     testImplementation testDependencies.androidxArchCore
     testImplementation testDependencies.robolectric
-    testImplementation testDependencies.mockk
 }

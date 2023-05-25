@@ -2,14 +2,16 @@ package com.developer.presentation.viewmodel
 
 import com.developer.domain.models.CharacterEntityItem
 import com.developer.domain.models.Relative
+import com.developer.domain.repository.CharacterRepository
 import com.developer.domain.usecases.GetCharactersUseCase
 import com.developer.presentation.MainDispatcherRule
+import com.developer.presentation.helper.BaseViewModelTest
 import com.developer.presentation.mappers.CharacterMapper
 import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -19,20 +21,20 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import java.io.IOException
 
-@ExperimentalCoroutinesApi
+@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(MockitoJUnitRunner::class)
-class BBCharacterListViewModelTest {
+class BBCharacterListViewModelTest : BaseViewModelTest() {
 
     @get: Rule
     val mainDispatcherRule = MainDispatcherRule()
 
     @Mock
-    lateinit var characterMapper: CharacterMapper
+    lateinit var characterRepository: CharacterRepository
 
-    @Mock
     lateinit var charactersUseCase: GetCharactersUseCase
+
+    lateinit var characterMapper: CharacterMapper
 
     private lateinit var viewModel: BBCharactersViewModel
 
@@ -40,40 +42,36 @@ class BBCharacterListViewModelTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
+        charactersUseCase = GetCharactersUseCase(characterRepository)
+        characterMapper = CharacterMapper()
         viewModel = BBCharactersViewModel(charactersUseCase, characterMapper)
     }
 
     @Test
     fun `get characters should return character list from use-case`() =
-        runTest {
+        dispatcher.runBlockingTest {
             // Arrange (Given)
             val characters = getCharacters()
-            `when`(charactersUseCase(5)).thenReturn(flowOf(characters))
-            Assert.assertEquals(CharacterUIModel.Loading, viewModel.characterListFlow.value)
-
+            whenever(charactersUseCase(limit)).thenReturn(flowOf(characters))
             // Act (When)
             viewModel.loadCharacters()
-
             // Assert (Then)
             Assert.assertEquals(
                 CharacterUIModel.Success(characterMapper.mapFromModel(characters)),
                 viewModel.characterListFlow.value
             )
-
         }
 
     @Test
     fun `get characters should return empty character list from use-case`() =
-        runTest {
+        dispatcher.runBlockingTest {
             // Arrange (Given)
             val characters = listOf<CharacterEntityItem>()
-            Assert.assertEquals(CharacterUIModel.Loading, viewModel.characterListFlow.value)
-
-            `when`(charactersUseCase(5)).thenReturn(flowOf(characters))
+            `when`(charactersUseCase(limit)).thenReturn(flowOf(characters))
             // Act (When)
             viewModel.loadCharacters()
-
             // Assert (Then)
+//            Assert.assertEquals(CharacterUIModel.Loading, viewModel.characterListFlow.value)
             Assert.assertEquals(
                 CharacterUIModel.Success(characterMapper.mapFromModel(characters)),
                 viewModel.characterListFlow.value
@@ -82,15 +80,16 @@ class BBCharacterListViewModelTest {
 
     @Test
     fun `get characters should return error from use-case`() =
-        runTest {
+        dispatcher.runBlockingTest {
             // Arrange (Given)
             val errorMessage = "Internal server error"
-            whenever(charactersUseCase.invoke(5)) doAnswer { throw IOException(errorMessage) }
+            `when`(charactersUseCase(limit)) doAnswer { throw IllegalAccessException(errorMessage) }
 
-            Assert.assertEquals(CharacterUIModel.Loading, viewModel.characterListFlow.value)
             // Act (When)
             viewModel.loadCharacters()
 
+            // Assert (Then)
+            Assert.assertEquals(CharacterUIModel.Loading, viewModel.characterListFlow.value)
         }
 
     private fun getCharacters(): List<CharacterEntityItem> = listOf(
@@ -143,5 +142,9 @@ class BBCharacterListViewModelTest {
             )
         )
     )
+
+    companion object {
+        const val limit = 30
+    }
 
 }

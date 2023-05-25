@@ -47,8 +47,8 @@ class GetCharacterByIdUseCaseTest : BaseUseCaseTest() {
 
             val character = getCharacterByIdUseCase(characterId).single()
 
-            assertEquals(character.id, 448)
-            assertEquals(character.hairColor, "Black")
+            assertEquals(character.id, characterId)
+            assertEquals(character.hairColor, color)
             verify(characterRepository, times(1)).getCharacter(characterId)
         }
 
@@ -93,5 +93,6 @@ class GetCharacterByIdUseCaseTest : BaseUseCaseTest() {
 
     companion object {
         private const val characterId: Int = 448
+        private const val color = "Black"
     }
 }

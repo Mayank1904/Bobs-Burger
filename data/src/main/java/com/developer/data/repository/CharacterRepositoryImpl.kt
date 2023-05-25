@@ -2,7 +2,7 @@ package com.developer.data.repository
 
 import com.developer.data.mappers.CharacterEntityItemMapper
 import com.developer.data.mappers.CharacterEntityMapper
-import com.developer.data.remote.api.CharacterService
+import com.developer.data.remote.CharacterService
 import com.developer.domain.models.CharacterEntityItem
 import com.developer.domain.repository.CharacterRepository
 import kotlinx.coroutines.flow.Flow

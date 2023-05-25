@@ -20,7 +20,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
@@ -34,10 +33,6 @@ class GetCharacterListUseCaseTest : BaseUseCaseTest() {
     private var characterRepository = mock<CharacterRepository>()
 
     val getCharactersUseCase by lazy { GetCharactersUseCase(characterRepository) }
-
-    @Before
-    fun setUp() {
-    }
 
     @Test
     fun `get bob characters should return success with bob character list`() =

@@ -49,10 +49,10 @@ class CharacterRepositoryImpTest : BaseDataTest() {
     @Test
     fun `get characters should return character list`() =
         runTest {
-            `when`(characterService.getCharacters(5)) doReturn getCharacters()
+            `when`(characterService.getCharacters(limit)) doReturn getCharacters()
 
             // Act (When)
-            val characters = characterRepositoryImpl.getCharacters(5).singleOrNull()
+            val characters = characterRepositoryImpl.getCharacters(limit).singleOrNull()
 
             // Assert (Then)
             TestCase.assertEquals(characters?.size, 0)
@@ -149,5 +149,6 @@ class CharacterRepositoryImpTest : BaseDataTest() {
 
     companion object {
         private const val characterId: Int = 441
+        private const val limit = 5
     }
 }

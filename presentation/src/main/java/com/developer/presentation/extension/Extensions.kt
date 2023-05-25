@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.retryWhen
-import java.io.IOException
 
 
 private const val RETRY_TIME_IN_MILLIS = 5_000L
@@ -38,8 +37,8 @@ fun <T> Flow<T>.asResult(): Flow<Result<T>> {
         .onStart {
             emit(Result.Loading)
         }
-        .retryWhen { cause, attempt ->
-            if (cause is IOException && attempt < RETRY_ATTEMPT_COUNT) {
+        .retryWhen { _, attempt ->
+            if (attempt < RETRY_ATTEMPT_COUNT) {
                 delay(RETRY_TIME_IN_MILLIS)
                 true
             } else {

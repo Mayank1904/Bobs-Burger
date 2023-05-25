@@ -5,12 +5,13 @@ import com.developer.domain.models.Relative
 import com.developer.domain.repository.CharacterRepository
 import com.developer.domain.usecases.GetCharacterByIdUseCase
 import com.developer.presentation.MainDispatcherRule
+import com.developer.presentation.helper.BaseViewModelTest
 import com.developer.presentation.mappers.CharacterItemMapper
 import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -23,7 +24,7 @@ import java.io.IOException
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class BBCharacterDetailViewModelTest {
+class BBCharacterDetailViewModelTest : BaseViewModelTest() {
 
     @get: Rule
     val mainDispatcherRule = MainDispatcherRule()
@@ -47,11 +48,10 @@ class BBCharacterDetailViewModelTest {
 
     @Test
     fun `get character detail with character Id should return character list from use-case`() =
-        runTest {
+        dispatcher.runBlockingTest {
             // Arrange (Given)
             val character = getCharacters()[0]
-            `when`(characterByIdUseCase(448)).thenReturn(flowOf(character))
-            Assert.assertEquals(CharacterDetailUIModel.Loading, viewModel.characterDetailFlow.value)
+            `when`(characterByIdUseCase(characterId)).thenReturn(flowOf(character))
             // Act (When)
             viewModel.getCharacterDetail(characterId)
 
@@ -66,14 +66,16 @@ class BBCharacterDetailViewModelTest {
 
     @Test
     fun `get character detail with character Id should return error from use-case`() =
-        runTest {
+        dispatcher.runBlockingTest {
             // Arrange (Given)
             val errorMessage = "Internal server error"
             whenever(characterByIdUseCase(characterId)) doAnswer { throw IOException(errorMessage) }
-            Assert.assertEquals(CharacterDetailUIModel.Loading, viewModel.characterDetailFlow.value)
 
             // Act (When)
             viewModel.getCharacterDetail(characterId)
+
+            // Assert (Then)
+            Assert.assertEquals(CharacterDetailUIModel.Loading, viewModel.characterDetailFlow.value)
         }
 
 

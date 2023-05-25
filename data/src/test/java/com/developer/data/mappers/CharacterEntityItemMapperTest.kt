@@ -33,9 +33,9 @@ class CharacterEntityItemMapperTest : BaseDataTest() {
             val mappedCharacter = characterEntityItemMapper.mapFromModel(character)
 
             // Assert (Then)
-            assertEquals(mappedCharacter.id, 441)
-            assertEquals(mappedCharacter.age, "12")
-            assertEquals(mappedCharacter.gender, "Male")
+            assertEquals(mappedCharacter.id, characterId)
+            assertEquals(mappedCharacter.age, age)
+            assertEquals(mappedCharacter.gender, gender)
 
         }
 
@@ -90,5 +90,12 @@ class CharacterEntityItemMapperTest : BaseDataTest() {
                 )
             )
         )
+    }
+
+
+    companion object {
+        private const val characterId: Int = 441
+        private const val age: String = "12"
+        private const val gender: String = "Male"
     }
 }
