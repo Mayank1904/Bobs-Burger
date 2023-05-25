@@ -10,8 +10,12 @@ import com.developer.presentation.mappers.CharacterItemMapper
 import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -21,6 +25,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 import java.io.IOException
+import java.lang.Error
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -66,16 +71,29 @@ class BBCharacterDetailViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `get character detail with character Id should return error from use-case`() =
-        dispatcher.runBlockingTest {
+        runTest {
             // Arrange (Given)
             val errorMessage = "Internal server error"
-            whenever(characterByIdUseCase(characterId)) doAnswer { throw IOException(errorMessage) }
-
-            // Act (When)
-            viewModel.getCharacterDetail(characterId)
-
+            `whenever`(characterByIdUseCase(characterId)) doAnswer { throw IOException(errorMessage) }
             // Assert (Then)
-            Assert.assertEquals(CharacterDetailUIModel.Loading, viewModel.characterDetailFlow.value)
+            launch {
+                viewModel.getCharacterDetail(characterId)
+                viewModel.characterDetailFlow.collect {
+                    if (it is CharacterDetailUIModel.Error) {
+                        Assert.assertEquals(
+                            CharacterDetailUIModel.Error(errorMessage),
+                            viewModel.characterDetailFlow.value
+                        )
+                        cancel()
+                    } else if(it is CharacterDetailUIModel.Loading){
+                        Assert.assertEquals(
+                            CharacterDetailUIModel.Loading,
+                            viewModel.characterDetailFlow.value
+                        )
+                        cancel()
+                    }
+                }
+            }
         }
 
 

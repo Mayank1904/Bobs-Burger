@@ -4,7 +4,7 @@ import com.developer.data.mappers.CharacterEntityItemMapper
 import com.developer.data.mappers.CharacterEntityMapper
 import com.developer.data.models.CharacterEntityItemModel
 import com.developer.data.models.Relative
-import com.developer.data.remote.api.CharacterService
+import com.developer.data.remote.CharacterService
 import com.developer.data.repository.CharacterRepositoryImpl
 import com.developer.data.utils.BaseDataTest
 import com.nhaarman.mockitokotlin2.any
