@@ -1,12 +1,12 @@
 package com.developer.presentation.ui.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
+import com.developer.presentation.R
 import com.developer.presentation.databinding.CharacterListItemBinding
 import com.developer.presentation.models.CharacterModel
 import com.developer.presentation.ui.base.BaseAdapter
@@ -36,14 +36,15 @@ class CharacterAdapter @Inject constructor(
 
     inner class CharacterViewHolder(private val binding: CharacterListItemBinding) :
         RecyclerView.ViewHolder(binding.root), Binder<CharacterModel> {
-        @SuppressLint("SetTextI18n")
         override fun bind(item: CharacterModel) {
             binding.apply {
-                with(item) {
+                item.apply {
                     textViewCharacterName.text = name
-                    textViewEpisode.text = "First Episode: $firstEpisode"
+                    textViewEpisode.text = String.format(
+                        root.context.resources.getString(R.string.first_episode),
+                        firstEpisode
+                    )
                     textViewVoicedBy.text = voicedBy
-
                     glide.load(image).into(imageViewCharacter)
                     root.setOnClickListener {
                         onItemClickListener?.let { itemClick ->

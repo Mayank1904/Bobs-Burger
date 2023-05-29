@@ -1,7 +1,6 @@
 package com.developer.domain.usecases
 
 import com.developer.domain.models.CharacterEntityItem
-import com.developer.domain.models.Relative
 import com.developer.domain.repository.CharacterRepository
 import com.developer.domain.usecases.utils.BaseUseCaseTest
 import com.developer.domain.usecases.utils.mock
@@ -75,10 +74,7 @@ class GetCharacterListUseCaseTest : BaseUseCaseTest() {
                 firstEpisode = "",
                 voicedBy = "",
                 url = "",
-                wikiUrl = "",
-                relatives = listOf(
-                    Relative(id = "", name = "", relationship = "", url = "", wikiUrl = "")
-                )
+                wikiUrl = ""
             ),
             CharacterEntityItem(
                 id = 441,
@@ -91,10 +87,7 @@ class GetCharacterListUseCaseTest : BaseUseCaseTest() {
                 firstEpisode = "",
                 voicedBy = "",
                 url = "",
-                wikiUrl = "",
-                relatives = listOf(
-                    Relative(id = "", name = "", relationship = "", url = "", wikiUrl = "")
-                )
+                wikiUrl = ""
             ),
             CharacterEntityItem(
                 id = 441,
@@ -107,10 +100,7 @@ class GetCharacterListUseCaseTest : BaseUseCaseTest() {
                 firstEpisode = "",
                 voicedBy = "",
                 url = "",
-                wikiUrl = "",
-                relatives = listOf(
-                    Relative(id = "", name = "", relationship = "", url = "", wikiUrl = "")
-                )
+                wikiUrl = ""
             )
         )
 

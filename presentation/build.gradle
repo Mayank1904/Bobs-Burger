@@ -30,6 +30,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -39,10 +42,10 @@ dependencies {
 
     // Dagger-Hilt
     implementation presentationModuleDependencies.daggerHilt
-    implementation uiModuleDependencies.constraint
-    implementation uiModuleDependencies.material
-    implementation uiModuleDependencies.navigationFragmentKtx
-    implementation uiModuleDependencies.navigationUiKtx
+    implementation presentationModuleDependencies.constraint
+    implementation presentationModuleDependencies.material
+    implementation presentationModuleDependencies.navigationFragmentKtx
+    implementation presentationModuleDependencies.navigationUiKtx
     kapt presentationModuleDependencies.daggerHiltKapt
 
     // JavaX
@@ -52,14 +55,12 @@ dependencies {
     implementation presentationModuleDependencies.lifeCycle
 
     // Glide
-    implementation uiModuleDependencies.glide
-    kapt uiModuleDependencies.glideKapt
+    implementation presentationModuleDependencies.glide
+    kapt presentationModuleDependencies.glideKapt
 
     testImplementation testDependencies.coroutinesTest
     testImplementation testDependencies.jUnit
     testImplementation testDependencies.assertJ
     testImplementation testDependencies.mockitoKotlin
     testImplementation testDependencies.mockitoInline
-    testImplementation testDependencies.androidxArchCore
-    testImplementation testDependencies.robolectric
 }

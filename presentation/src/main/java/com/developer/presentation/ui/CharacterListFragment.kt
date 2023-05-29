@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.developer.presentation.R
@@ -33,6 +35,10 @@ class CharacterListFragment : Fragment() {
     @Inject
     lateinit var characterAdapter: CharacterAdapter
 
+    companion object {
+        private const val characterIdKey = "character_id"
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,28 +57,31 @@ class CharacterListFragment : Fragment() {
         )[BBCharactersViewModel::class.java]
 
         setupRecyclerView()
+
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.loadCharacters()
-            viewModel.characterListFlow.collect { result ->
-                when (result) {
-                    is CharacterUIModel.Success -> {
-                        binding.progressBarCharacters.makeGone()
-                        result.data.let {
-                            characterAdapter.list = it
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.characterListFlow.collect { result ->
+                    when (result) {
+                        is CharacterUIModel.Success -> {
+                            binding.progressBarCharacters.makeGone()
+                            result.data.let {
+                                characterAdapter.list = it
+                            }
                         }
-                    }
 
-                    is CharacterUIModel.Error -> {
-                        binding.progressBarCharacters.makeGone()
-                        showSnackBar(binding.root, result.error!!)
-                    }
+                        is CharacterUIModel.Error -> {
+                            binding.progressBarCharacters.makeGone()
+                            showSnackBar(binding.root, result.error)
+                        }
 
-                    is CharacterUIModel.Loading -> {
-                        binding.progressBarCharacters.makeVisible()
+                        is CharacterUIModel.Loading -> {
+                            binding.progressBarCharacters.makeVisible()
+                        }
                     }
                 }
             }
         }
+
     }
 
     private fun setupRecyclerView() {
@@ -82,7 +91,7 @@ class CharacterListFragment : Fragment() {
         }
 
         characterAdapter.setItemClickListener { character ->
-            val bundle = bundleOf("character_id" to character.id)
+            val bundle = bundleOf(characterIdKey to character.id)
             binding.root.findNavController()
                 .navigate(R.id.action_characterListFragment_to_characterDetailFragment, bundle)
         }

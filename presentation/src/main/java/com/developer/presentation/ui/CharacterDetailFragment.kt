@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.RequestManager
 import com.developer.presentation.databinding.FragmentCharacterDetailBinding
 import com.developer.presentation.extension.makeGone
@@ -45,18 +47,18 @@ class CharacterDetailFragment : Fragment() {
             requireActivity().defaultViewModelProviderFactory
         )[BBCharacterDetailViewModel::class.java]
 
-        characterId = requireArguments().getInt("character_id")
+        characterId = requireArguments().getInt(characterIdKey)
         viewModel.getCharacterDetail(characterId)
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.characterDetailFlow.collect { result ->
-                when (result) {
-                    is CharacterDetailUIModel.Success -> {
-                        result.data.let { character ->
-                            binding.apply {
-                                progressBarCharacterDetail.makeGone()
-                                cardViewImage.makeVisible()
-                                with(character) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.characterDetailFlow.collect { result ->
+                    when (result) {
+                        is CharacterDetailUIModel.Success -> {
+                            result.data.apply {
+                                binding.apply {
+                                    progressBarCharacterDetail.makeGone()
+                                    cardViewImage.makeVisible()
                                     textViewCharacterName.text = name
                                     glide.load(image).into(imageViewCharacter)
                                     textViewOccupation.text = occupation
@@ -66,15 +68,15 @@ class CharacterDetailFragment : Fragment() {
                                 }
                             }
                         }
-                    }
 
-                    is CharacterDetailUIModel.Error -> {
-                        binding.progressBarCharacterDetail.makeGone()
-                        showSnackBar(binding.root, result.error!!)
-                    }
+                        is CharacterDetailUIModel.Error -> {
+                            binding.progressBarCharacterDetail.makeGone()
+                            showSnackBar(binding.root, result.error)
+                        }
 
-                    is CharacterDetailUIModel.Loading -> {
-                        binding.progressBarCharacterDetail.makeVisible()
+                        is CharacterDetailUIModel.Loading -> {
+                            binding.progressBarCharacterDetail.makeVisible()
+                        }
                     }
                 }
             }
@@ -87,6 +89,7 @@ class CharacterDetailFragment : Fragment() {
     }
 
     companion object {
+        private const val characterIdKey = "character_id"
         private var characterId: Int = 0
     }
 }

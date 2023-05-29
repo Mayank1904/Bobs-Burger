@@ -1,7 +1,6 @@
 package com.developer.data.mappers
 
 import com.developer.data.models.CharacterEntityItemModel
-import com.developer.data.models.Relative
 import com.developer.data.utils.BaseDataTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -53,10 +52,7 @@ class CharacterEntityMapperTest : BaseDataTest() {
                 firstEpisode = "",
                 voicedBy = "",
                 url = "",
-                wikiUrl = "",
-                relatives = listOf(
-                    Relative(id = "", name = "", relationship = "", url = "", wikiUrl = "")
-                )
+                wikiUrl = ""
             ),
             CharacterEntityItemModel(
                 id = 441,
@@ -69,10 +65,7 @@ class CharacterEntityMapperTest : BaseDataTest() {
                 firstEpisode = "",
                 voicedBy = "",
                 url = "",
-                wikiUrl = "",
-                relatives = listOf(
-                    Relative(id = "", name = "", relationship = "", url = "", wikiUrl = "")
-                )
+                wikiUrl = ""
             ),
             CharacterEntityItemModel(
                 id = 441,
@@ -85,10 +78,7 @@ class CharacterEntityMapperTest : BaseDataTest() {
                 firstEpisode = "",
                 voicedBy = "",
                 url = "",
-                wikiUrl = "",
-                relatives = listOf(
-                    Relative(id = "", name = "", relationship = "", url = "", wikiUrl = "")
-                )
+                wikiUrl = ""
             )
         )
     }

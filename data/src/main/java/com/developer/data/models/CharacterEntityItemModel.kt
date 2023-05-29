@@ -10,7 +10,6 @@ data class CharacterEntityItemModel(
     val image: String,
     val name: String,
     val occupation: String?,
-    val relatives: List<Relative>,
     val url: String,
     val voicedBy: String?,
     val wikiUrl: String

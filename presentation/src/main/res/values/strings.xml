@@ -6,4 +6,5 @@
     <string name="occupation_label">Occupation</string>
     <string name="voiced_by_label">Voiced By</string>
     <string name="hair_color_label">Hair Color</string>
+    <string name="first_episode">First Episode: %1$s</string>
 </resources>

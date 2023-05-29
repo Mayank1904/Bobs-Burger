@@ -2,7 +2,6 @@ package com.developer.data.mappers
 
 import com.developer.data.models.CharacterEntityItemModel
 import com.developer.domain.models.CharacterEntityItem
-import com.developer.domain.models.Relative
 import javax.inject.Inject
 
 class CharacterEntityMapper @Inject constructor() :
@@ -18,15 +17,6 @@ class CharacterEntityMapper @Inject constructor() :
                 image = it.image,
                 name = it.name,
                 occupation = it.occupation,
-                relatives = it.relatives.map { relative ->
-                    Relative(
-                        id = relative.id,
-                        name = relative.name,
-                        relationship = relative.relationship,
-                        url = relative.url,
-                        wikiUrl = relative.wikiUrl,
-                    )
-                },
                 url = it.url,
                 voicedBy = it.voicedBy,
                 wikiUrl = it.wikiUrl,

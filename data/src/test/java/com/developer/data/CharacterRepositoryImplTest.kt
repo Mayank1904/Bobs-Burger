@@ -3,7 +3,6 @@ package com.developer.data
 import com.developer.data.mappers.CharacterEntityItemMapper
 import com.developer.data.mappers.CharacterEntityMapper
 import com.developer.data.models.CharacterEntityItemModel
-import com.developer.data.models.Relative
 import com.developer.data.remote.CharacterService
 import com.developer.data.repository.CharacterRepositoryImpl
 import com.developer.data.utils.BaseDataTest
@@ -85,10 +84,7 @@ class CharacterRepositoryImpTest : BaseDataTest() {
                 firstEpisode = "",
                 voicedBy = "",
                 url = "",
-                wikiUrl = "",
-                relatives = listOf(
-                    Relative(id = "", name = "", relationship = "", url = "", wikiUrl = "")
-                )
+                wikiUrl = ""
             ),
             CharacterEntityItemModel(
                 id = 441,
@@ -101,10 +97,7 @@ class CharacterRepositoryImpTest : BaseDataTest() {
                 firstEpisode = "",
                 voicedBy = "",
                 url = "",
-                wikiUrl = "",
-                relatives = listOf(
-                    Relative(id = "", name = "", relationship = "", url = "", wikiUrl = "")
-                )
+                wikiUrl = ""
             ),
             CharacterEntityItemModel(
                 id = 441,
@@ -117,10 +110,7 @@ class CharacterRepositoryImpTest : BaseDataTest() {
                 firstEpisode = "",
                 voicedBy = "",
                 url = "",
-                wikiUrl = "",
-                relatives = listOf(
-                    Relative(id = "", name = "", relationship = "", url = "", wikiUrl = "")
-                )
+                wikiUrl = ""
             )
         )
 
@@ -136,15 +126,6 @@ class CharacterRepositoryImpTest : BaseDataTest() {
         voicedBy = "",
         url = "",
         wikiUrl = "",
-        relatives = listOf(
-            Relative(
-                id = "",
-                name = "",
-                relationship = "",
-                url = "",
-                wikiUrl = ""
-            )
-        )
     )
 
     companion object {

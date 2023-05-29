@@ -40,9 +40,10 @@ dependencies {
     implementation project(':presentation')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     // Glide
-    implementation uiModuleDependencies.glide
-    kapt uiModuleDependencies.glideKapt
+    implementation glideDependencies.glide
+    kapt glideDependencies.glideKapt
     // Dagger Hilt
-    implementation uiModuleDependencies.daggerHilt
-    kapt uiModuleDependencies.daggerHiltKapt
+    implementation hiltDependencies.hiltAndroid
+    kapt hiltDependencies.hiltAndroidKapt
+    kapt hiltDependencies.hiltKapt
 }

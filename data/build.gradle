@@ -40,10 +40,10 @@ dependencies {
     implementation dataModuleDependencies.coroutine
     // JavaX
     implementation dataModuleDependencies.javax
-    implementation remoteModuleDependencies.network
-
-    implementation uiModuleDependencies.daggerHilt
-    kapt uiModuleDependencies.daggerHiltKapt
+    implementation dataModuleDependencies.network
+    // Dagger Hilt
+    implementation dataModuleDependencies.daggerHilt
+    kapt dataModuleDependencies.daggerHiltKapt
 
     testImplementation testDependencies.coroutinesTest
     testImplementation testDependencies.jUnit

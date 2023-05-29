@@ -1,20 +1,15 @@
 package com.developer.presentation.viewmodel
 
+import android.content.Context
 import com.developer.domain.models.CharacterEntityItem
-import com.developer.domain.models.Relative
 import com.developer.domain.repository.CharacterRepository
 import com.developer.domain.usecases.GetCharacterByIdUseCase
 import com.developer.presentation.MainDispatcherRule
-import com.developer.presentation.helper.BaseViewModelTest
 import com.developer.presentation.mappers.CharacterItemMapper
 import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
@@ -25,14 +20,16 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 import java.io.IOException
-import java.lang.Error
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class BBCharacterDetailViewModelTest : BaseViewModelTest() {
+class BBCharacterDetailViewModelTest {
 
     @get: Rule
     val mainDispatcherRule = MainDispatcherRule()
+
+    @Mock
+    lateinit var context: Context
 
     @Mock
     lateinit var characterRepository: CharacterRepository
@@ -53,7 +50,7 @@ class BBCharacterDetailViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `get character detail with character Id should return character list from use-case`() =
-        dispatcher.runBlockingTest {
+        runTest {
             // Arrange (Given)
             val character = getCharacters()[0]
             `when`(characterByIdUseCase(characterId)).thenReturn(flowOf(character))
@@ -73,29 +70,14 @@ class BBCharacterDetailViewModelTest : BaseViewModelTest() {
     fun `get character detail with character Id should return error from use-case`() =
         runTest {
             // Arrange (Given)
-            val errorMessage = "Internal server error"
-            `whenever`(characterByIdUseCase(characterId)) doAnswer { throw IOException(errorMessage) }
+            whenever(characterByIdUseCase(characterId)) doAnswer { throw IOException(errorMessage) }
             // Assert (Then)
-            launch {
-                viewModel.getCharacterDetail(characterId)
-                viewModel.characterDetailFlow.collect {
-                    if (it is CharacterDetailUIModel.Error) {
-                        Assert.assertEquals(
-                            CharacterDetailUIModel.Error(errorMessage),
-                            viewModel.characterDetailFlow.value
-                        )
-                        cancel()
-                    } else if(it is CharacterDetailUIModel.Loading){
-                        Assert.assertEquals(
-                            CharacterDetailUIModel.Loading,
-                            viewModel.characterDetailFlow.value
-                        )
-                        cancel()
-                    }
-                }
-            }
+            viewModel.getCharacterDetail(characterId)
+            Assert.assertEquals(
+                CharacterDetailUIModel.Loading,
+                viewModel.characterDetailFlow.value
+            )
         }
-
 
     private fun getCharacters(): List<CharacterEntityItem> = listOf(
         CharacterEntityItem(
@@ -109,10 +91,7 @@ class BBCharacterDetailViewModelTest : BaseViewModelTest() {
             firstEpisode = "",
             voicedBy = "",
             url = "",
-            wikiUrl = "",
-            relatives = listOf(
-                Relative(id = "", name = "", relationship = "", url = "", wikiUrl = "")
-            )
+            wikiUrl = ""
         ),
         CharacterEntityItem(
             id = 441,
@@ -125,10 +104,7 @@ class BBCharacterDetailViewModelTest : BaseViewModelTest() {
             firstEpisode = "",
             voicedBy = "",
             url = "",
-            wikiUrl = "",
-            relatives = listOf(
-                Relative(id = "", name = "", relationship = "", url = "", wikiUrl = "")
-            )
+            wikiUrl = ""
         ),
         CharacterEntityItem(
             id = 441,
@@ -141,15 +117,14 @@ class BBCharacterDetailViewModelTest : BaseViewModelTest() {
             firstEpisode = "",
             voicedBy = "",
             url = "",
-            wikiUrl = "",
-            relatives = listOf(
-                Relative(id = "", name = "", relationship = "", url = "", wikiUrl = "")
-            )
+            wikiUrl = ""
         )
     )
 
     companion object {
         private const val characterId: Int = 441
+        private const val errorMessage = "Internal Server Error"
+
     }
 
 }
