@@ -47,7 +47,7 @@ class CharacterDetailFragment : Fragment() {
             requireActivity().defaultViewModelProviderFactory
         )[BBCharacterDetailViewModel::class.java]
 
-        characterId = requireArguments().getInt(characterIdKey)
+        characterId = requireArguments().getInt(CHARACTER_ID_KEY)
         viewModel.getCharacterDetail(characterId)
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -89,7 +89,7 @@ class CharacterDetailFragment : Fragment() {
     }
 
     companion object {
-        private const val characterIdKey = "character_id"
+        private const val CHARACTER_ID_KEY = "character_id"
         private var characterId: Int = 0
     }
 }

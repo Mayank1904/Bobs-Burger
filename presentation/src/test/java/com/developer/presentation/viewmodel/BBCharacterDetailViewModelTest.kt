@@ -1,6 +1,5 @@
 package com.developer.presentation.viewmodel
 
-import android.content.Context
 import com.developer.domain.models.CharacterEntityItem
 import com.developer.domain.repository.CharacterRepository
 import com.developer.domain.usecases.GetCharacterByIdUseCase
@@ -29,9 +28,6 @@ class BBCharacterDetailViewModelTest {
     val mainDispatcherRule = MainDispatcherRule()
 
     @Mock
-    lateinit var context: Context
-
-    @Mock
     lateinit var characterRepository: CharacterRepository
 
     lateinit var characterByIdUseCase: GetCharacterByIdUseCase
@@ -53,9 +49,9 @@ class BBCharacterDetailViewModelTest {
         runTest {
             // Arrange (Given)
             val character = getCharacters()[0]
-            `when`(characterByIdUseCase(characterId)).thenReturn(flowOf(character))
+            `when`(characterByIdUseCase(CHARACTER_ID)).thenReturn(flowOf(character))
             // Act (When)
-            viewModel.getCharacterDetail(characterId)
+            viewModel.getCharacterDetail(CHARACTER_ID)
 
             val mappedData = characterItemMapper.mapFromModel(character)
             // Assert (Then)
@@ -70,9 +66,9 @@ class BBCharacterDetailViewModelTest {
     fun `get character detail with character Id should return error from use-case`() =
         runTest {
             // Arrange (Given)
-            whenever(characterByIdUseCase(characterId)) doAnswer { throw IOException(errorMessage) }
+            whenever(characterByIdUseCase(CHARACTER_ID)) doAnswer { throw IOException(ERROR_MESSAGE) }
             // Assert (Then)
-            viewModel.getCharacterDetail(characterId)
+            viewModel.getCharacterDetail(CHARACTER_ID)
             Assert.assertEquals(
                 CharacterDetailUIModel.Loading,
                 viewModel.characterDetailFlow.value
@@ -81,50 +77,51 @@ class BBCharacterDetailViewModelTest {
 
     private fun getCharacters(): List<CharacterEntityItem> = listOf(
         CharacterEntityItem(
-            id = 441,
-            age = "12",
-            name = "",
-            image = "",
-            gender = "",
-            hairColor = "",
-            occupation = "",
-            firstEpisode = "",
-            voicedBy = "",
-            url = "",
-            wikiUrl = ""
+            id = CHARACTER_ID,
+            age = AGE,
+            name = EMPTY_STRING,
+            image = EMPTY_STRING,
+            gender = EMPTY_STRING,
+            hairColor = EMPTY_STRING,
+            occupation = EMPTY_STRING,
+            firstEpisode = EMPTY_STRING,
+            voicedBy = EMPTY_STRING,
+            url = EMPTY_STRING,
+            wikiUrl = EMPTY_STRING
         ),
         CharacterEntityItem(
-            id = 441,
-            age = "12",
-            name = "",
-            image = "",
-            gender = "",
-            hairColor = "",
-            occupation = "",
-            firstEpisode = "",
-            voicedBy = "",
-            url = "",
-            wikiUrl = ""
+            id = CHARACTER_ID,
+            age = AGE,
+            name = EMPTY_STRING,
+            image = EMPTY_STRING,
+            gender = EMPTY_STRING,
+            hairColor = EMPTY_STRING,
+            occupation = EMPTY_STRING,
+            firstEpisode = EMPTY_STRING,
+            voicedBy = EMPTY_STRING,
+            url = EMPTY_STRING,
+            wikiUrl = EMPTY_STRING
         ),
         CharacterEntityItem(
-            id = 441,
-            age = "12",
-            name = "",
-            image = "",
-            gender = "",
-            hairColor = "",
-            occupation = "",
-            firstEpisode = "",
-            voicedBy = "",
-            url = "",
-            wikiUrl = ""
+            id = CHARACTER_ID,
+            age = AGE,
+            name = EMPTY_STRING,
+            image = EMPTY_STRING,
+            gender = EMPTY_STRING,
+            hairColor = EMPTY_STRING,
+            occupation = EMPTY_STRING,
+            firstEpisode = EMPTY_STRING,
+            voicedBy = EMPTY_STRING,
+            url = EMPTY_STRING,
+            wikiUrl = EMPTY_STRING
         )
     )
 
     companion object {
-        private const val characterId: Int = 441
-        private const val errorMessage = "Internal Server Error"
-
+        private const val CHARACTER_ID: Int = 441
+        private const val ERROR_MESSAGE = "Internal Server Error"
+        private const val EMPTY_STRING = ""
+        private const val AGE = "12"
     }
 
 }

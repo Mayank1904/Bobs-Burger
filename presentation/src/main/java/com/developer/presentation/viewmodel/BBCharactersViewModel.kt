@@ -19,7 +19,7 @@ class BBCharactersViewModel @Inject constructor(
     private val characterMapper: CharacterMapper
 ) : ViewModel() {
     companion object {
-        const val limit = 30
+        const val LIMIT = 30
     }
 
     private val _characterListFlow = MutableStateFlow<CharacterUIModel>(CharacterUIModel.Loading)
@@ -31,7 +31,7 @@ class BBCharactersViewModel @Inject constructor(
 
     fun loadCharacters() =
         viewModelScope.launch {
-            getCharacterUseCase(limit).asResult().collect { result ->
+            getCharacterUseCase(LIMIT).asResult().collect { result ->
                 _characterListFlow.update {
                     when (result) {
                         is Result.Loading -> CharacterUIModel.Loading

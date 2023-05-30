@@ -1,6 +1,5 @@
 package com.developer.presentation.viewmodel
 
-import android.content.Context
 import com.developer.domain.models.CharacterEntityItem
 import com.developer.domain.repository.CharacterRepository
 import com.developer.domain.usecases.GetCharactersUseCase
@@ -30,9 +29,6 @@ class BBCharacterListViewModelTest {
     val mainDispatcherRule = MainDispatcherRule()
 
     @Mock
-    private lateinit var context: Context
-
-    @Mock
     lateinit var characterRepository: CharacterRepository
 
     lateinit var charactersUseCase: GetCharactersUseCase
@@ -55,7 +51,7 @@ class BBCharacterListViewModelTest {
         runTest {
             // Arrange (Given)
             val characters = getCharacters()
-            whenever(charactersUseCase(limit)).thenReturn(flowOf(characters))
+            whenever(charactersUseCase(LIMIT)).thenReturn(flowOf(characters))
             // Act (When)
             viewModel.loadCharacters()
             // Assert (Then)
@@ -70,7 +66,7 @@ class BBCharacterListViewModelTest {
         runTest {
             // Arrange (Given)
             val characters = listOf<CharacterEntityItem>()
-            `when`(charactersUseCase(limit)).thenReturn(flowOf(characters))
+            `when`(charactersUseCase(LIMIT)).thenReturn(flowOf(characters))
             // Act (When)
             viewModel.loadCharacters()
             // Assert (Then)
@@ -84,7 +80,7 @@ class BBCharacterListViewModelTest {
     fun `get characters should return error from use-case`() =
         runTest {
             // Arrange (Given)
-            `when`(charactersUseCase(limit)) doAnswer { throw IOException(errorMessage) }
+            `when`(charactersUseCase(LIMIT)) doAnswer { throw IOException(ERROR_MESSAGE) }
             Assert.assertEquals(CharacterUIModel.Loading, viewModel.characterListFlow.value)
             // Act (When)
             viewModel.loadCharacters()
@@ -92,49 +88,52 @@ class BBCharacterListViewModelTest {
 
     private fun getCharacters(): List<CharacterEntityItem> = listOf(
         CharacterEntityItem(
-            id = 441,
-            age = "12",
-            name = "",
-            image = "",
-            gender = "",
-            hairColor = "",
-            occupation = "",
-            firstEpisode = "",
-            voicedBy = "",
-            url = "",
-            wikiUrl = ""
+            id = CHARACTER_ID,
+            age = AGE,
+            name = EMPTY_STRING,
+            image = EMPTY_STRING,
+            gender = EMPTY_STRING,
+            hairColor = EMPTY_STRING,
+            occupation = EMPTY_STRING,
+            firstEpisode = EMPTY_STRING,
+            voicedBy = EMPTY_STRING,
+            url = EMPTY_STRING,
+            wikiUrl = EMPTY_STRING
         ),
         CharacterEntityItem(
-            id = 441,
-            age = "12",
-            name = "",
-            image = "",
-            gender = "",
-            hairColor = "",
-            occupation = "",
-            firstEpisode = "",
-            voicedBy = "",
-            url = "",
-            wikiUrl = ""
+            id = CHARACTER_ID,
+            age = AGE,
+            name = EMPTY_STRING,
+            image = EMPTY_STRING,
+            gender = EMPTY_STRING,
+            hairColor = EMPTY_STRING,
+            occupation = EMPTY_STRING,
+            firstEpisode = EMPTY_STRING,
+            voicedBy = EMPTY_STRING,
+            url = EMPTY_STRING,
+            wikiUrl = EMPTY_STRING
         ),
         CharacterEntityItem(
-            id = 441,
-            age = "12",
-            name = "",
-            image = "",
-            gender = "",
-            hairColor = "",
-            occupation = "",
-            firstEpisode = "",
-            voicedBy = "",
-            url = "",
-            wikiUrl = ""
+            id = CHARACTER_ID,
+            age = AGE,
+            name = EMPTY_STRING,
+            image = EMPTY_STRING,
+            gender = EMPTY_STRING,
+            hairColor = EMPTY_STRING,
+            occupation = EMPTY_STRING,
+            firstEpisode = EMPTY_STRING,
+            voicedBy = EMPTY_STRING,
+            url = EMPTY_STRING,
+            wikiUrl = EMPTY_STRING
         )
     )
 
     companion object {
-        private const val limit = 30
-        private const val errorMessage = "Internal Server Error"
+        private const val CHARACTER_ID = 441
+        private const val LIMIT = 30
+        private const val ERROR_MESSAGE = "Internal Server Error"
+        private const val EMPTY_STRING = ""
+        private const val AGE = "12"
     }
 
 }

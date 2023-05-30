@@ -42,53 +42,55 @@ class GetCharacterByIdUseCaseTest : BaseUseCaseTest() {
     @Test
     fun `get bob character by id should return success with bob character`() =
         dispatcher.runBlockingTest {
-            whenever(characterRepository.getCharacter(characterId)) doReturn getCharacter()
+            whenever(characterRepository.getCharacter(CHARACTER_ID)) doReturn getCharacter()
 
-            val character = getCharacterByIdUseCase(characterId).single()
+            val character = getCharacterByIdUseCase(CHARACTER_ID).single()
 
-            assertEquals(character.id, characterId)
-            assertEquals(character.hairColor, color)
-            verify(characterRepository, times(1)).getCharacter(characterId)
+            assertEquals(character.id, CHARACTER_ID)
+            assertEquals(character.hairColor, COLOR)
+            verify(characterRepository, times(1)).getCharacter(CHARACTER_ID)
         }
 
 
     @Test
     fun `get bob character by id should return error result with exception`() =
         dispatcher.runBlockingTest {
-            whenever(characterRepository.getCharacter(characterId)) doAnswer { throw IOException() }
+            whenever(characterRepository.getCharacter(CHARACTER_ID)) doAnswer { throw IOException() }
 
             // Act (When)
-            launch(exceptionHandler) { getCharacterByIdUseCase(characterId).single() }
+            launch(exceptionHandler) { getCharacterByIdUseCase(CHARACTER_ID).single() }
 
             // Assert (Then)
             assertThat(
                 exceptionHandler.uncaughtExceptions.first(),
                 instanceOf(IOException::class.java)
             )
-            verify(characterRepository, times(1)).getCharacter(characterId)
+            verify(characterRepository, times(1)).getCharacter(CHARACTER_ID)
         }
 
     private fun getCharacter(): Flow<CharacterEntityItem> = flow {
         val character =
             CharacterEntityItem(
-                id = 448,
-                age = "12",
-                name = "",
-                image = "",
-                gender = "",
-                hairColor = "Black",
-                occupation = "",
-                firstEpisode = "",
-                voicedBy = "",
-                url = "",
-                wikiUrl = ""
+                id = CHARACTER_ID,
+                age = AGE,
+                name = EMPTY_STRING,
+                image = EMPTY_STRING,
+                gender = EMPTY_STRING,
+                hairColor = COLOR,
+                occupation = EMPTY_STRING,
+                firstEpisode = EMPTY_STRING,
+                voicedBy = EMPTY_STRING,
+                url = EMPTY_STRING,
+                wikiUrl = EMPTY_STRING
             )
 
         emit(character)
     }
 
     companion object {
-        private const val characterId: Int = 448
-        private const val color = "Black"
+        private const val CHARACTER_ID = 448
+        private const val COLOR = "Black"
+        private const val EMPTY_STRING = ""
+        private const val AGE = "12"
     }
 }

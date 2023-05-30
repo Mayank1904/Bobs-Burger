@@ -48,10 +48,10 @@ class CharacterRepositoryImpTest : BaseDataTest() {
     @Test
     fun `get characters should return character list`() =
         runTest {
-            `when`(characterService.getCharacters(limit)) doReturn getCharacters()
+            `when`(characterService.getCharacters(LIMIT)) doReturn getCharacters()
 
             // Act (When)
-            val characters = characterRepositoryImpl.getCharacters(limit).singleOrNull()
+            val characters = characterRepositoryImpl.getCharacters(LIMIT).singleOrNull()
 
             // Assert (Then)
             TestCase.assertEquals(characters?.size, 0)
@@ -61,10 +61,10 @@ class CharacterRepositoryImpTest : BaseDataTest() {
     @Test
     fun `get character by id should return character`() =
         runTest {
-            `when`(characterService.getCharacter(characterId)) doReturn getCharacter()
+            `when`(characterService.getCharacter(CHARACTER_ID)) doReturn getCharacter()
 
             // Act (When)
-            val character = characterRepositoryImpl.getCharacter(characterId).singleOrNull()
+            val character = characterRepositoryImpl.getCharacter(CHARACTER_ID).singleOrNull()
 
             // Assert (Then)
             assertEquals(character?.id, null)
@@ -74,62 +74,65 @@ class CharacterRepositoryImpTest : BaseDataTest() {
     private fun getCharacters(): List<CharacterEntityItemModel> =
         listOf(
             CharacterEntityItemModel(
-                id = 441,
-                age = "12",
-                name = "",
-                image = "",
-                gender = "",
-                hairColor = "",
-                occupation = "",
-                firstEpisode = "",
-                voicedBy = "",
-                url = "",
-                wikiUrl = ""
+                id = CHARACTER_ID,
+                age = AGE,
+                name = EMPTY_STRING,
+                image = EMPTY_STRING,
+                gender = EMPTY_STRING,
+                hairColor = EMPTY_STRING,
+                occupation = EMPTY_STRING,
+                firstEpisode = EMPTY_STRING,
+                voicedBy = EMPTY_STRING,
+                url = EMPTY_STRING,
+                wikiUrl = EMPTY_STRING
             ),
             CharacterEntityItemModel(
-                id = 441,
-                age = "12",
-                name = "",
-                image = "",
-                gender = "",
-                hairColor = "",
-                occupation = "",
-                firstEpisode = "",
-                voicedBy = "",
-                url = "",
-                wikiUrl = ""
+                id = CHARACTER_ID,
+                age = AGE,
+                name = EMPTY_STRING,
+                image = EMPTY_STRING,
+                gender = EMPTY_STRING,
+                hairColor = EMPTY_STRING,
+                occupation = EMPTY_STRING,
+                firstEpisode = EMPTY_STRING,
+                voicedBy = EMPTY_STRING,
+                url = EMPTY_STRING,
+                wikiUrl = EMPTY_STRING
             ),
             CharacterEntityItemModel(
-                id = 441,
-                age = "12",
-                name = "",
-                image = "",
-                gender = "",
-                hairColor = "",
-                occupation = "",
-                firstEpisode = "",
-                voicedBy = "",
-                url = "",
-                wikiUrl = ""
+                id = CHARACTER_ID,
+                age = AGE,
+                name = EMPTY_STRING,
+                image = EMPTY_STRING,
+                gender = EMPTY_STRING,
+                hairColor = EMPTY_STRING,
+                occupation = EMPTY_STRING,
+                firstEpisode = EMPTY_STRING,
+                voicedBy = EMPTY_STRING,
+                url = EMPTY_STRING,
+                wikiUrl = EMPTY_STRING
             )
         )
 
     private fun getCharacter(): CharacterEntityItemModel = CharacterEntityItemModel(
-        id = 441,
-        age = "12",
-        name = "",
-        image = "",
-        gender = "",
-        hairColor = "Black",
-        occupation = "",
-        firstEpisode = "",
-        voicedBy = "",
-        url = "",
-        wikiUrl = "",
+        id = CHARACTER_ID,
+        age = AGE,
+        name = EMPTY_STRING,
+        image = EMPTY_STRING,
+        gender = EMPTY_STRING,
+        hairColor = HAIR_COLOR,
+        occupation = EMPTY_STRING,
+        firstEpisode = EMPTY_STRING,
+        voicedBy = EMPTY_STRING,
+        url = EMPTY_STRING,
+        wikiUrl = EMPTY_STRING,
     )
 
     companion object {
-        private const val characterId: Int = 441
-        private const val limit = 5
+        private const val CHARACTER_ID = 441
+        private const val LIMIT = 5
+        private const val EMPTY_STRING = ""
+        private const val AGE = "12"
+        private const val HAIR_COLOR = "Black"
     }
 }
