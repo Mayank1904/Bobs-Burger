@@ -36,9 +36,8 @@ class CharacterListFragment : Fragment() {
     lateinit var characterAdapter: CharacterAdapter
 
     companion object {
-        private const val characterIdKey = "character_id"
+        private const val CHARACTER_ID_KEY = "character_id"
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -91,7 +90,7 @@ class CharacterListFragment : Fragment() {
         }
 
         characterAdapter.setItemClickListener { character ->
-            val bundle = bundleOf(characterIdKey to character.id)
+            val bundle = bundleOf(CHARACTER_ID_KEY to character.id)
             binding.root.findNavController()
                 .navigate(R.id.action_characterListFragment_to_characterDetailFragment, bundle)
         }
