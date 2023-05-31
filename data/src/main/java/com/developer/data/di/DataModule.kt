@@ -28,17 +28,18 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideCharacterService(): CharacterService {
+    fun provideCharacterService(baseUrl: String): CharacterService {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
-        return Retrofit.Builder().baseUrl(BuildConfig.BASE_URL)
+        return Retrofit.Builder().baseUrl(baseUrl)
             .client(
-                OkHttpClient.Builder()
-                    .addInterceptor(httpLoggingInterceptor.apply {
-                        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-                    })
-                    .connectTimeout(OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
-                    .readTimeout(OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
-                    .build()
+                OkHttpClient.Builder().apply {
+                    if (BuildConfig.DEBUG)
+                        addInterceptor(httpLoggingInterceptor.apply {
+                            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+                        })
+                    connectTimeout(OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
+                    readTimeout(OK_HTTP_TIMEOUT, TimeUnit.SECONDS)
+                }.build()
             )
             .addConverterFactory(MoshiConverterFactory.create())
             .build()

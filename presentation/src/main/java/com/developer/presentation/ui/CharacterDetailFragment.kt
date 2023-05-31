@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.RequestManager
@@ -25,7 +25,7 @@ class CharacterDetailFragment : Fragment() {
 
     private var _binding: FragmentCharacterDetailBinding? = null
     private val binding get() = _binding!!
-    lateinit var viewModel: BBCharacterDetailViewModel
+    private val viewModel: BBCharacterDetailViewModel by viewModels()
 
     @Inject
     lateinit var glide: RequestManager
@@ -42,10 +42,10 @@ class CharacterDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(
-            requireActivity(),
-            requireActivity().defaultViewModelProviderFactory
-        )[BBCharacterDetailViewModel::class.java]
+//        viewModel = ViewModelProvider(
+//            requireActivity(),
+//            requireActivity().defaultViewModelProviderFactory
+//        )[BBCharacterDetailViewModel::class.java]
 
         characterId = requireArguments().getInt(CHARACTER_ID_KEY)
         viewModel.getCharacterDetail(characterId)

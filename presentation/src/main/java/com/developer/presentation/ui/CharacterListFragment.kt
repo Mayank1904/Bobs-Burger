@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
@@ -27,7 +27,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CharacterListFragment : Fragment() {
 
-    lateinit var viewModel: BBCharactersViewModel
+    private val viewModel: BBCharactersViewModel by viewModels()
 
     private var _binding: FragmentCharacterListBinding? = null
     private val binding get() = _binding!!
@@ -50,10 +50,6 @@ class CharacterListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(
-            requireActivity(),
-            requireActivity().defaultViewModelProviderFactory
-        )[BBCharactersViewModel::class.java]
 
         setupRecyclerView()
 

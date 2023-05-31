@@ -15,6 +15,7 @@ android {
         targetSdkVersion androidTargetSdkVersion
         versionCode appVersionCode
         versionName appVersionName
+        buildConfigField "String", "BASE_URL", "\"https://bobsburgers-api.herokuapp.com/\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
