@@ -6,11 +6,7 @@ import com.developer.data.models.CharacterEntityItemModel
 import com.developer.data.remote.CharacterService
 import com.developer.data.repository.CharacterRepositoryImpl
 import com.developer.data.utils.BaseDataTest
-import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
-import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.singleOrNull
@@ -28,10 +24,8 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CharacterRepositoryImpTest : BaseDataTest() {
 
-    @Mock
     lateinit var characterItemMapper: CharacterEntityItemMapper
 
-    @Mock
     lateinit var characterMapper: CharacterEntityMapper
 
     @Mock
@@ -41,6 +35,8 @@ class CharacterRepositoryImpTest : BaseDataTest() {
 
     @Before
     fun setUp() {
+        characterItemMapper = CharacterEntityItemMapper()
+        characterMapper = CharacterEntityMapper()
         characterRepositoryImpl =
             CharacterRepositoryImpl(characterService, characterMapper, characterItemMapper)
     }
@@ -54,21 +50,19 @@ class CharacterRepositoryImpTest : BaseDataTest() {
             val characters = characterRepositoryImpl.getCharacters(LIMIT).singleOrNull()
 
             // Assert (Then)
-            TestCase.assertEquals(characters?.size, 0)
-            verify(characterMapper, times(1)).mapFromModel(any())
+            assertEquals(characters?.size, 3)
         }
 
     @Test
     fun `get character by id should return character`() =
         runTest {
-            `when`(characterService.getCharacter(CHARACTER_ID)) doReturn getCharacter()
+            `when`(characterService.getCharacter(CHARACTER_ID)) doReturn getCharacters()[0]
 
             // Act (When)
             val character = characterRepositoryImpl.getCharacter(CHARACTER_ID).singleOrNull()
 
             // Assert (Then)
-            assertEquals(character?.id, null)
-            verify(characterItemMapper, times(1)).mapFromModel(any())
+            assertEquals(character?.id, CHARACTER_ID)
         }
 
     private fun getCharacters(): List<CharacterEntityItemModel> =
@@ -114,25 +108,10 @@ class CharacterRepositoryImpTest : BaseDataTest() {
             )
         )
 
-    private fun getCharacter(): CharacterEntityItemModel = CharacterEntityItemModel(
-        id = CHARACTER_ID,
-        age = AGE,
-        name = EMPTY_STRING,
-        image = EMPTY_STRING,
-        gender = EMPTY_STRING,
-        hairColor = HAIR_COLOR,
-        occupation = EMPTY_STRING,
-        firstEpisode = EMPTY_STRING,
-        voicedBy = EMPTY_STRING,
-        url = EMPTY_STRING,
-        wikiUrl = EMPTY_STRING,
-    )
-
     companion object {
         private const val CHARACTER_ID = 441
         private const val LIMIT = 5
         private const val EMPTY_STRING = ""
         private const val AGE = "12"
-        private const val HAIR_COLOR = "Black"
     }
 }

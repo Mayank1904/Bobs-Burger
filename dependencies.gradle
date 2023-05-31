@@ -43,9 +43,7 @@ ext {
 
     // test dependencies
     junitVersion = '4.13'
-    assertJVersion = '3.11.1'
     mockitoKotlinVersion = '2.1.0'
-    mockitoInlineVersion = '2.13.0'
 
     // Common dependencies
     kotlinDependencies = [
@@ -59,9 +57,7 @@ ext {
     testDependencies = [
             coroutinesTest: "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion",
             jUnit         : "junit:junit:$junitVersion",
-            assertJ       : "org.assertj:assertj-core:$assertJVersion",
             mockitoKotlin : "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion",
-            mockitoInline : "org.mockito:mockito-inline:$mockitoInlineVersion",
     ]
 
     lifeCycleDependencies = [

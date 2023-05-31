@@ -15,7 +15,5 @@ dependencies {
     implementation domainModuleDependencies.javax
     testImplementation testDependencies.coroutinesTest
     testImplementation testDependencies.jUnit
-    testImplementation testDependencies.assertJ
     testImplementation testDependencies.mockitoKotlin
-    testImplementation testDependencies.mockitoInline
 }
