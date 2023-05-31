@@ -90,6 +90,6 @@ class CharacterDetailFragment : Fragment() {
 
     companion object {
         private const val CHARACTER_ID_KEY = "character_id"
-        private var characterId: Int = 0
+        private var characterId: Int = Int.MIN_VALUE
     }
 }

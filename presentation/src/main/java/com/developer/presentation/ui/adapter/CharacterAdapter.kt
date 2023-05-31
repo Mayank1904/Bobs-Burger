@@ -37,8 +37,8 @@ class CharacterAdapter @Inject constructor(
     inner class CharacterViewHolder(private val binding: CharacterListItemBinding) :
         RecyclerView.ViewHolder(binding.root), Binder<CharacterModel> {
         override fun bind(item: CharacterModel) {
-            binding.apply {
-                item.apply {
+            with(binding) {
+                with(item) {
                     textViewCharacterName.text = name
                     textViewEpisode.text = String.format(
                         root.context.resources.getString(R.string.first_episode),

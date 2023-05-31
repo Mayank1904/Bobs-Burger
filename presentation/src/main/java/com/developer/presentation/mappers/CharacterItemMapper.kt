@@ -16,6 +16,7 @@ class CharacterItemMapper @Inject constructor(
             name = model.name,
             occupation = model.occupation,
             voicedBy = model.voicedBy,
+            age = model.age
         )
     }
 }

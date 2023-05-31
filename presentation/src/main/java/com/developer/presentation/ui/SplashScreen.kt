@@ -17,6 +17,12 @@ class SplashScreen : AppCompatActivity() {
     private var _binding: ActivitySplashScreenBinding? = null
     private val binding get() = _binding!!
 
+    companion object {
+        private const val IMAGE_URL =
+            "https://bobsburgers-api.herokuapp.com/images/characters/448.jpg"
+        private const val TIME_DELAY = 1000L
+    }
+
     @Inject
     lateinit var glide: RequestManager
 
@@ -24,11 +30,10 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        glide.load("https://bobsburgers-api.herokuapp.com/images/characters/448.jpg")
-            .into(binding.imageView)
+        glide.load(IMAGE_URL).into(binding.imageView)
 
         lifecycleScope.launch {
-            delay(1000)
+            delay(TIME_DELAY)
             startActivity(Intent(this@SplashScreen, MainActivity::class.java))
             // close splash activity
             finish()
